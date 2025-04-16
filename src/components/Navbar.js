@@ -70,45 +70,43 @@ export default function Navbar() {
       </div>
 
       {/* Links for Larger Screens */}
-      <ul className="hidden md:flex space-x-6 gap-5">
-        {isLoggedIn ? (
-          <>
-            <li>
-              <a href="" className="hover:text-gray-400 transition">
-                Find Events
-              </a>
-            </li>
-            <li>
-              <a href="" className="hover:text-gray-400 transition">
-                Dashboard
-              </a>
-            </li>
-            <li>
-              <a href="" className="hover:text-gray-400 transition">
-                Logout
-              </a>
-            </li>
-          </>
-        ) : (
-          <>
-            <li>
-              <a href="" className="hover:text-gray-400 transition">
-                Find Events
-              </a>
-            </li>
-            <li>
-              <a href="" className="hover:text-gray-400 transition">
-                Sign Up
-              </a>
-            </li>
-            <li>
-              <a href="" className="hover:text-gray-400 transition">
-                Login
-              </a>
-            </li>
-          </>
-        )}
-      </ul>
+      {isLoggedIn ? (
+        <ul className="hidden md:flex space-x-6 gap-5">
+          <li>
+            <a href="" className="hover:text-gray-400 transition">
+              Find Events
+            </a>
+          </li>
+          <li>
+            <a href="" className="hover:text-gray-400 transition">
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a href="" className="hover:text-gray-400 transition">
+              Logout
+            </a>
+          </li>
+        </ul>
+      ) : (
+        <ul className="hidden md:flex space-x-6 gap-5">
+          <li>
+            <a href="" className="hover:text-gray-400 transition">
+              Find Events
+            </a>
+          </li>
+          <li>
+            <a href="" className="hover:text-gray-400 transition">
+              Sign Up
+            </a>
+          </li>
+          <li>
+            <a href="" className="hover:text-gray-400 transition">
+              Login
+            </a>
+          </li>
+        </ul>
+      )}
     </nav>
   );
 }
