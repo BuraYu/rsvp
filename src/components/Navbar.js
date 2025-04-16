@@ -2,6 +2,7 @@ import { useState } from "react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <nav className="h-[80px] w-full flex justify-between items-center px-[96px] bg-gray-900">
@@ -70,21 +71,43 @@ export default function Navbar() {
 
       {/* Links for Larger Screens */}
       <ul className="hidden md:flex space-x-6 gap-5">
-        <li>
-          <a href="" className="hover:text-gray-400 transition">
-            Find Events
-          </a>
-        </li>
-        <li>
-          <a href="" className="hover:text-gray-400 transition">
-            Dashboard
-          </a>
-        </li>
-        <li>
-          <a href="" className="hover:text-gray-400 transition">
-            Logout
-          </a>
-        </li>
+        {isLoggedIn ? (
+          <>
+            <li>
+              <a href="" className="hover:text-gray-400 transition">
+                Find Events
+              </a>
+            </li>
+            <li>
+              <a href="" className="hover:text-gray-400 transition">
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <a href="" className="hover:text-gray-400 transition">
+                Logout
+              </a>
+            </li>
+          </>
+        ) : (
+          <>
+            <li>
+              <a href="" className="hover:text-gray-400 transition">
+                Find Events
+              </a>
+            </li>
+            <li>
+              <a href="" className="hover:text-gray-400 transition">
+                Sign Up
+              </a>
+            </li>
+            <li>
+              <a href="" className="hover:text-gray-400 transition">
+                Login
+              </a>
+            </li>
+          </>
+        )}
       </ul>
     </nav>
   );
