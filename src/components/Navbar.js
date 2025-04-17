@@ -8,8 +8,8 @@ export default function Navbar() {
     <nav className="h-[80px] w-full flex justify-between items-center px-[96px] bg-gray-900">
       {/* Logo */}
       <div className="flex items-center space-x-2 text-xl font-bold gap-2">
-        <span>logo</span>
-        <span>Text</span>
+        <span className="text-white">logo</span>
+        <span className="text-white">Text</span>
       </div>
 
       {/* Hamburger Menu Button */}
@@ -58,13 +58,22 @@ export default function Navbar() {
             ></path>
           </svg>
         </button>
-        <a href="" className="hover:text-gray-400 text-2xl transition">
+        <a
+          href=""
+          className="hover:text-gray-400 text-white text-2xl transition"
+        >
           Find Events
         </a>
-        <a href="" className="hover:text-gray-400 text-2xl transition">
+        <a
+          href=""
+          className="hover:text-gray-400 text-white text-2xl transition"
+        >
           Dashboard
         </a>
-        <a href="" className="hover:text-gray-400 text-2xl transition">
+        <a
+          href=""
+          className="hover:text-gray-400 text-white text-2xl transition"
+        >
           Logout
         </a>
       </div>
@@ -73,17 +82,20 @@ export default function Navbar() {
       {isLoggedIn ? (
         <ul className="hidden md:flex space-x-6 gap-5">
           <li>
-            <a href="" className="hover:text-gray-400 transition">
+            <a
+              href="/events"
+              className="hover:text-gray-400  text-white transition"
+            >
               Find Events
             </a>
           </li>
           <li>
-            <a href="" className="hover:text-gray-400 transition">
+            <a href="" className="hover:text-gray-400 text-white transition">
               Dashboard
             </a>
           </li>
           <li>
-            <a href="" className="hover:text-gray-400 transition">
+            <a href="" className="hover:text-gray-400 text-white transition">
               Logout
             </a>
           </li>
@@ -91,17 +103,20 @@ export default function Navbar() {
       ) : (
         <ul className="hidden md:flex space-x-6 gap-5">
           <li>
-            <a href="" className="hover:text-gray-400 transition">
+            <a
+              href="/events"
+              className="hover:text-gray-400 text-white transition"
+            >
               Find Events
             </a>
           </li>
           <li>
-            <a href="" className="hover:text-gray-400 transition">
+            <a href="" className="hover:text-gray-400  text-white transition">
               Sign Up
             </a>
           </li>
           <li>
-            <a href="" className="hover:text-gray-400 transition">
+            <a href="" className="hover:text-gray-400  text-white transition">
               Login
             </a>
           </li>
