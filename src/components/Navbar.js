@@ -62,7 +62,7 @@ export default function Navbar() {
           href=""
           className="hover:text-gray-400 text-white text-2xl transition"
         >
-          Find Events
+          Find Event
         </a>
         <a
           href=""
@@ -86,7 +86,7 @@ export default function Navbar() {
               href="/events"
               className="hover:text-gray-400  text-white transition"
             >
-              Find Events
+              Find Event
             </a>
           </li>
           <li>
