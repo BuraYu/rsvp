@@ -86,11 +86,17 @@ export default function Events() {
                             className="w-full h-auto"
                           />
                         </div>
-                        <div className="w-1/2 md:w-full flex flex-col justify-center">
-                          <span className="inline-block self-start text-xs text-pink-500 bg-pink-100 rounded-md px-2 py-1">
+                        <div className="w-1/2 md:w-full flex flex-col justify-center gap-1 sm:ml-5 md:ml-0">
+                          <span className="text-[0.7rem] text-gray-500 mt-1">
+                            March 15, 2023
+                          </span>{" "}
+                          <h3 className="text-2xl font-bold mb-4">
+                            This is an event
+                          </h3>
+                          <span className="inline-block self-start text-[0.6rem] text-pink-500 bg-pink-100 rounded-md px-2 py-1">
                             Category
                           </span>
-                          <h4 className="text-lg font-bold mt-2">test</h4>
+                          {/* Date added here */}
                         </div>
                       </div>
                     </CardContent>
