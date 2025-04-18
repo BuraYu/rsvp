@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { format } from "date-fns";
 import Navbar from "@/components/Navbar";
 import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
@@ -15,10 +16,21 @@ import {
 
 export default function Events() {
   const [activeButton, setActiveButton] = useState("All");
+  const [events, setEvents] = useState([]);
+
+  useEffect(() => {
+    fetch("api/events")
+      .then((res) => res.json())
+      .then((data) => setEvents(data));
+  }, []);
 
   const handleButtonClick = (category) => {
     setActiveButton(category);
   };
+
+  function formatDate(dateString) {
+    return format(new Date(dateString), "dd MMMM yyyy");
+  }
 
   const eventTypes = [
     "All",
@@ -28,6 +40,8 @@ export default function Events() {
     "Film",
     "Literature",
     "Technology",
+    "Food",
+    "Education",
   ];
 
   return (
@@ -69,7 +83,7 @@ export default function Events() {
 
             {/* Carousel Items */}
             <CarouselContent className="flex gap-4 px-2">
-              {Array.from({ length: 10 }).map((_, index) => (
+              {events.map((event, index) => (
                 <CarouselItem
                   key={index}
                   className="flex flex-shrink-0 md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
@@ -88,15 +102,14 @@ export default function Events() {
                         </div>
                         <div className="w-1/2 md:w-full flex flex-col justify-center gap-1 sm:ml-5 md:ml-0">
                           <span className="text-[0.7rem] text-gray-500 mt-1">
-                            March 15, 2023
+                            {formatDate(event.dateTime)}
                           </span>{" "}
                           <h3 className="text-2xl font-bold mb-4">
-                            This is an event
+                            {event.name}
                           </h3>
                           <span className="inline-block self-start text-[0.6rem] text-pink-500 bg-pink-100 rounded-md px-2 py-1">
-                            Category
+                            {event.category}
                           </span>
-                          {/* Date added here */}
                         </div>
                       </div>
                     </CardContent>
