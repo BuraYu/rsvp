@@ -62,6 +62,24 @@ export default function Events() {
 
   const eventTypes = grabEventTypes(events);
 
+  const categoryColors = {
+    All: "bg-gray-200 text-gray-800",
+    Music: "bg-blue-100 text-blue-500",
+    Games: "bg-green-100 text-green-500",
+    Sports: "bg-yellow-100 text-yellow-500",
+    Film: "bg-red-100 text-red-500",
+    Literature: "bg-purple-100 text-purple-500",
+    Technology: "bg-indigo-100 text-indigo-500",
+    Food: "bg-orange-100 text-orange-500",
+    Education: "bg-teal-100 text-teal-500",
+    Entertainment: "bg-pink-100 text-pink-500",
+    Art: "bg-rose-100 text-rose-500",
+    Wellness: "bg-emerald-100 text-emerald-500",
+  };
+
+  const getCategoryColor = (category) =>
+    categoryColors[category] || "bg-gray-100 text-gray-500";
+
   return (
     <div className="bg-gray-100">
       <Navbar />
@@ -125,7 +143,12 @@ export default function Events() {
                           <h3 className="text-2xl font-bold mb-4">
                             {event.name}
                           </h3>
-                          <span className="inline-block self-start text-[0.6rem] text-pink-500 bg-pink-100 rounded-md px-2 py-1">
+                          <span
+                            className={`inline-block self-start text-[0.6rem] rounded-md px-2 py-1 ${getCategoryColor(
+                              event.category
+                            )}`}
+                          >
+                            {" "}
                             {event.category}
                           </span>
                         </div>
