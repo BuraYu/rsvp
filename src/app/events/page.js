@@ -55,17 +55,12 @@ export default function Events() {
     return format(new Date(dateString), "dd MMMM yyyy");
   }
 
-  const eventTypes = [
-    "All",
-    "Music",
-    "Games",
-    "Sports",
-    "Film",
-    "Literature",
-    "Technology",
-    "Food",
-    "Education",
-  ];
+  const grabEventTypes = (inputData) => {
+    const categories = inputData.map((ele) => ele.category);
+    return ["All", ...new Set(categories)];
+  };
+
+  const eventTypes = grabEventTypes(events);
 
   return (
     <div className="bg-gray-100">
