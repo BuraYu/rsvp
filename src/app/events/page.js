@@ -17,15 +17,38 @@ import {
 export default function Events() {
   const [activeButton, setActiveButton] = useState("All");
   const [events, setEvents] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState([]);
 
   useEffect(() => {
-    fetch("api/events")
-      .then((res) => res.json())
-      .then((data) => setEvents(data));
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch("/api/events");
+        const data = await response.json();
+        if (Array.isArray(data)) {
+          setEvents(data);
+          setFilteredEvents(data);
+        } else {
+          console.error("API did not return an array:", data);
+          setEvents([]);
+          setFilteredEvents([]);
+        }
+      } catch (error) {
+        console.error("Error fetching events:", error);
+        setEvents([]);
+        setFilteredEvents([]);
+      }
+    };
+
+    fetchEvents();
   }, []);
 
   const handleButtonClick = (category) => {
     setActiveButton(category);
+    if (category == "All") {
+      setFilteredEvents(events);
+    } else {
+      setFilteredEvents(events.filter((event) => event.category === category));
+    }
   };
 
   function formatDate(dateString) {
@@ -83,7 +106,7 @@ export default function Events() {
 
             {/* Carousel Items */}
             <CarouselContent className="flex gap-4 px-2">
-              {events.map((event, index) => (
+              {filteredEvents.map((event, index) => (
                 <CarouselItem
                   key={index}
                   className="flex flex-shrink-0 md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
