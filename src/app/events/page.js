@@ -63,7 +63,6 @@ export default function Events() {
   const eventTypes = grabEventTypes(events);
 
   const categoryColors = {
-    All: "bg-gray-200 text-gray-800",
     Music: "bg-blue-100 text-blue-500",
     Games: "bg-green-100 text-green-500",
     Sports: "bg-yellow-100 text-yellow-500",
