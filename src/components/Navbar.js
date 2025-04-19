@@ -1,3 +1,4 @@
+import { Link } from "lucide-react";
 import { useState } from "react";
 
 export default function Navbar() {
@@ -58,24 +59,24 @@ export default function Navbar() {
             ></path>
           </svg>
         </button>
-        <a
+        <Link
           href=""
           className="hover:text-gray-400 text-white text-2xl transition"
         >
           Find Event
-        </a>
-        <a
+        </Link>
+        <Link
           href=""
           className="hover:text-gray-400 text-white text-2xl transition"
         >
           Dashboard
-        </a>
-        <a
+        </Link>
+        <Link
           href=""
           className="hover:text-gray-400 text-white text-2xl transition"
         >
           Logout
-        </a>
+        </Link>
       </div>
 
       {/* Links for Larger Screens */}
