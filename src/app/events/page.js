@@ -13,6 +13,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Link } from "lucide-react";
 
 export default function Events() {
   const [activeButton, setActiveButton] = useState("All");
@@ -20,6 +21,7 @@ export default function Events() {
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [onlineEvents, setOnlineEvents] = useState([]);
   const [offlineEvents, setOfflineEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -143,37 +145,41 @@ export default function Events() {
                   key={index}
                   className="flex flex-shrink-0 md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
                 >
-                  <Card className="w-full md:w-[85%]">
-                    <CardContent className="relative flex h-auto p-4">
-                      <div className="flex flex-row md:flex-col space-y-2 w-full">
-                        <div className="w-1/2 md:w-full">
-                          <Image
-                            src="https://picsum.photos/350/250"
-                            width={350}
-                            height={250}
-                            alt="Picture of the author"
-                            className="w-full h-auto"
-                          />
+                  <a
+                    href={`/events/${event._id}`}
+                    className="w-full md:w-[85%] no-underline"
+                  >
+                    <Card className="w-full h-full hover:shadow-lg transition-shadow duration-300">
+                      <CardContent className="relative flex h-auto p-4">
+                        <div className="flex flex-row md:flex-col space-y-2 w-full">
+                          <div className="w-1/2 md:w-full">
+                            <Image
+                              src="https://picsum.photos/350/250"
+                              width={350}
+                              height={250}
+                              alt="Picture of the author"
+                              className="w-full h-auto"
+                            />
+                          </div>
+                          <div className="w-1/2 md:w-full flex flex-col justify-center gap-1 sm:ml-5 md:ml-0">
+                            <span className="text-[0.7rem] text-gray-500 mt-1">
+                              {formatDate(event.dateTime)}
+                            </span>{" "}
+                            <h3 className="text-2xl font-bold mb-4">
+                              {event.name}
+                            </h3>
+                            <span
+                              className={`inline-block self-start text-[0.6rem] rounded-md px-2 py-1 ${getCategoryColor(
+                                event.category
+                              )}`}
+                            >
+                              {event.category}
+                            </span>
+                          </div>
                         </div>
-                        <div className="w-1/2 md:w-full flex flex-col justify-center gap-1 sm:ml-5 md:ml-0">
-                          <span className="text-[0.7rem] text-gray-500 mt-1">
-                            {formatDate(event.dateTime)}
-                          </span>{" "}
-                          <h3 className="text-2xl font-bold mb-4">
-                            {event.name}
-                          </h3>
-                          <span
-                            className={`inline-block self-start text-[0.6rem] rounded-md px-2 py-1 ${getCategoryColor(
-                              event.category
-                            )}`}
-                          >
-                            {" "}
-                            {event.category}
-                          </span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                      </CardContent>
+                    </Card>
+                  </a>
                 </CarouselItem>
               ))}
             </CarouselContent>
@@ -201,37 +207,41 @@ export default function Events() {
                   key={index}
                   className="flex flex-shrink-0 md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
                 >
-                  <Card className="w-full md:w-[85%]">
-                    <CardContent className="relative flex h-auto p-4">
-                      <div className="flex flex-row md:flex-col space-y-2 w-full">
-                        <div className="w-1/2 md:w-full">
-                          <Image
-                            src="https://picsum.photos/350/250"
-                            width={350}
-                            height={250}
-                            alt="Picture of the author"
-                            className="w-full h-auto"
-                          />
+                  <a
+                    href={`/events/${event._id}`}
+                    className="w-full md:w-[85%] no-underline"
+                  >
+                    <Card className="w-full h-full hover:shadow-lg transition-shadow duration-300">
+                      <CardContent className="relative flex h-auto p-4">
+                        <div className="flex flex-row md:flex-col space-y-2 w-full">
+                          <div className="w-1/2 md:w-full">
+                            <Image
+                              src="https://picsum.photos/350/250"
+                              width={350}
+                              height={250}
+                              alt="Picture of the author"
+                              className="w-full h-auto"
+                            />
+                          </div>
+                          <div className="w-1/2 md:w-full flex flex-col justify-center gap-1 sm:ml-5 md:ml-0">
+                            <span className="text-[0.7rem] text-gray-500 mt-1">
+                              {formatDate(event.dateTime)}
+                            </span>{" "}
+                            <h3 className="text-2xl font-bold mb-4">
+                              {event.name}
+                            </h3>
+                            <span
+                              className={`inline-block self-start text-[0.6rem] rounded-md px-2 py-1 ${getCategoryColor(
+                                event.category
+                              )}`}
+                            >
+                              {event.category}
+                            </span>
+                          </div>
                         </div>
-                        <div className="w-1/2 md:w-full flex flex-col justify-center gap-1 sm:ml-5 md:ml-0">
-                          <span className="text-[0.7rem] text-gray-500 mt-1">
-                            {formatDate(event.dateTime)}
-                          </span>{" "}
-                          <h3 className="text-2xl font-bold mb-4">
-                            {event.name}
-                          </h3>
-                          <span
-                            className={`inline-block self-start text-[0.6rem] rounded-md px-2 py-1 ${getCategoryColor(
-                              event.category
-                            )}`}
-                          >
-                            {" "}
-                            {event.category}
-                          </span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                      </CardContent>
+                    </Card>
+                  </a>
                 </CarouselItem>
               ))}
             </CarouselContent>
@@ -258,37 +268,41 @@ export default function Events() {
                   key={index}
                   className="flex flex-shrink-0 md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
                 >
-                  <Card className="w-full md:w-[85%]">
-                    <CardContent className="relative flex h-auto p-4">
-                      <div className="flex flex-row md:flex-col space-y-2 w-full">
-                        <div className="w-1/2 md:w-full">
-                          <Image
-                            src="https://picsum.photos/350/250"
-                            width={350}
-                            height={250}
-                            alt="Picture of the author"
-                            className="w-full h-auto"
-                          />
+                  <a
+                    href={`/events/${event._id}`}
+                    className="w-full md:w-[85%] no-underline"
+                  >
+                    <Card className="w-full h-full hover:shadow-lg transition-shadow duration-300">
+                      <CardContent className="relative flex h-auto p-4">
+                        <div className="flex flex-row md:flex-col space-y-2 w-full">
+                          <div className="w-1/2 md:w-full">
+                            <Image
+                              src="https://picsum.photos/350/250"
+                              width={350}
+                              height={250}
+                              alt="Picture of the author"
+                              className="w-full h-auto"
+                            />
+                          </div>
+                          <div className="w-1/2 md:w-full flex flex-col justify-center gap-1 sm:ml-5 md:ml-0">
+                            <span className="text-[0.7rem] text-gray-500 mt-1">
+                              {formatDate(event.dateTime)}
+                            </span>{" "}
+                            <h3 className="text-2xl font-bold mb-4">
+                              {event.name}
+                            </h3>
+                            <span
+                              className={`inline-block self-start text-[0.6rem] rounded-md px-2 py-1 ${getCategoryColor(
+                                event.category
+                              )}`}
+                            >
+                              {event.category}
+                            </span>
+                          </div>
                         </div>
-                        <div className="w-1/2 md:w-full flex flex-col justify-center gap-1 sm:ml-5 md:ml-0">
-                          <span className="text-[0.7rem] text-gray-500 mt-1">
-                            {formatDate(event.dateTime)}
-                          </span>{" "}
-                          <h3 className="text-2xl font-bold mb-4">
-                            {event.name}
-                          </h3>
-                          <span
-                            className={`inline-block self-start text-[0.6rem] rounded-md px-2 py-1 ${getCategoryColor(
-                              event.category
-                            )}`}
-                          >
-                            {" "}
-                            {event.category}
-                          </span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                      </CardContent>
+                    </Card>
+                  </a>
                 </CarouselItem>
               ))}
             </CarouselContent>
