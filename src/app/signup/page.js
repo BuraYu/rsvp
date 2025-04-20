@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import BackgroundSVG from "@/assets/background.svg";
-import { Image } from "lucide-react";
 
 export default function Login() {
   const [username, setUsername] = useState("");
