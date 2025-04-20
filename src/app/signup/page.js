@@ -100,8 +100,8 @@ export default function Login() {
                 type="password"
                 placeholder="Re-enter the password"
                 className="p-2  w-full bg-transparent focus:outline-none disabled:text-neutral-500"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={rePassword}
+                onChange={(e) => setRePassword(e.target.value)}
               />
               <button type="button">
                 <svg
