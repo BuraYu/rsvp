@@ -60,7 +60,7 @@ export default function Navbar() {
           </svg>
         </button>
         <Link
-          href=""
+          href="/events"
           className="hover:text-gray-400 text-white text-2xl transition"
         >
           Find Event
@@ -112,12 +112,18 @@ export default function Navbar() {
             </a>
           </li>
           <li>
-            <a href="" className="hover:text-gray-400  text-white transition">
+            <a
+              href="/signup"
+              className="hover:text-gray-400  text-white transition"
+            >
               Sign Up
             </a>
           </li>
           <li>
-            <a href="" className="hover:text-gray-400  text-white transition">
+            <a
+              href="/login"
+              className="hover:text-gray-400  text-white transition"
+            >
               Login
             </a>
           </li>
