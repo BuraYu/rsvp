@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import BackgroundSVG from "@/assets/background.svg";
+import ArrowSVG from "@/assets/arrow.svg";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -11,6 +12,15 @@ export default function Login() {
 
   return (
     <div className="flex h-screen">
+      <a
+        class="absolute m-5 flex gap-1 font-bold items-center group w-max rounded-[18px] transition-all duration-500"
+        href="/"
+      >
+        <ArrowSVG class=" rounded-full  group-hover:p-1 group-hover:text-black" />
+        <p class="text-gray-100 relative text-transparent group-hover:text-black translate-x-16 group-hover:translate-x-0 group-hover:block transition-all">
+          Go back
+        </p>
+      </a>
       <div className="flex flex-col w-full md:w-1/2 items-center md:items-start md:h-full justify-center p-8 md:p-16 gap-4">
         <a
           title="Home"
