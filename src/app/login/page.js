@@ -1,15 +1,81 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+
 import BackgroundSVG from "@/assets/background.svg";
 import ArrowSVG from "@/assets/arrow.svg";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [submissionStatus, setSubmissionStatus] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
+
+  const router = useRouter();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!email || !password) {
+      setSubmissionStatus("Please fill in all required fields.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        "https://jsonplaceholder.typicode.com/posts",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
+      if (response.ok) {
+        setSubmissionStatus("Form submitted successfully!");
+        localStorage.setItem("authToken", data.token);
+        router.push("/dashboard");
+      } else {
+        setSubmissionStatus("Failed to submit the form.");
+      }
+    } catch (error) {
+      setSubmissionStatus("An error occurred. Please try again.");
+    }
+  };
+
+  useEffect(() => {
+    if (submissionStatus) {
+      setIsVisible(true);
+      const timeout = setTimeout(() => {
+        setIsVisible(false);
+        setTimeout(() => setSubmissionStatus(""), 500);
+      }, 1000);
+      return () => clearTimeout(timeout);
+    }
+  }, [submissionStatus]);
 
   return (
     <div className="flex h-screen">
+      {submissionStatus && (
+        <p
+          role="alert"
+          aria-live="assertive"
+          className={`fixed top-0 left-1/2 transform -translate-x-1/2 z-50 bg-white shadow-lg rounded-xl px-3 py-2 text-gray-800 text-center transition-all duration-500 ease-in-out ${
+            submissionStatus.includes("Form submitted successfully!")
+              ? "text-green-600"
+              : "text-red-600"
+          } ${
+            isVisible
+              ? "translate-y-10 opacity-100"
+              : "-translate-y-10 opacity-0"
+          }`}
+        >
+          {submissionStatus}
+        </p>
+      )}
       <a
         class="absolute m-5 flex gap-1 font-bold items-center group w-max rounded-[18px] transition-all duration-500"
         href="/"
@@ -28,7 +94,7 @@ export default function Login() {
           <span className="">Event app</span>
         </a>
         <h2 className="text-3xl font-bold">Log in</h2>
-        <form className="w-full">
+        <form className="w-full" onSubmit={handleSubmit}>
           <div className="flex flex-col">
             <label className="text-sm mb-2 text-neutral-500">Email</label>
             <div className="p-2 px-1 border border-neutral-300 focus-within:border-neutral-400 bg-transparent w-full inline-flex rounded-[18px] font-poppins">
@@ -43,7 +109,7 @@ export default function Login() {
           </div>
           <div className="flex flex-col mt-4 ">
             <label className="text-sm mb-2 text-neutral-500">Password</label>
-            <div className="p-2 px-1 pr-2 border border-neutral-300 focus-within:border-neutral-400 bg-transparent w-full inline-flex rounded-[18px] font-poppins">
+            <div className="flex p-2 px-1 pr-2 border border-neutral-300 focus-within:border-neutral-400 bg-transparent w-full inl3ine-flex rounded-[18px] font-poppins">
               <input
                 type="password"
                 placeholder="Enter your password"
