@@ -9,6 +9,16 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+
+  const validateEmail = () => {
+    const emailRegex = /^[^\s@]+@[^\s@]+.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setEmailError("Please enter a valid email address.");
+    } else {
+      setEmailError("");
+    }
+  };
 
   return (
     <div className="flex h-screen">
@@ -16,8 +26,8 @@ export default function Login() {
         class="absolute m-5 flex gap-1 font-bold items-center group w-max rounded-[18px] transition-all duration-500"
         href="/"
       >
-        <ArrowSVG class=" rounded-full  group-hover:p-1 group-hover:text-black" />
-        <p class="text-gray-100 relative text-transparent group-hover:text-black translate-x-16 group-hover:translate-x-0 group-hover:block transition-all">
+        <ArrowSVG className=" rounded-full  group-hover:p-1 group-hover:text-black" />
+        <p className="text-gray-100 relative text-transparent group-hover:text-black translate-x-16 group-hover:translate-x-0 group-hover:block transition-all">
           Go back
         </p>
       </a>
@@ -58,8 +68,12 @@ export default function Login() {
                 className="p-2 w-full bg-transparent focus:outline-none disabled:text-neutral-500"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                onBlur={() => validateEmail()}
               />
             </div>
+            {emailError && (
+              <p className="text-red-500 text-sm mt-1">{emailError}</p>
+            )}
           </div>
           {/* Password */}
           <div className="flex flex-col mt-4 ">
@@ -138,7 +152,7 @@ export default function Login() {
         <div className="w-full h-full relative">
           <a
             className="absolute bg-black text-white px-4 py-2 rounded-[18px] top-4 right-4 z-10"
-            href="/signup"
+            href="/login"
           >
             Login
           </a>
