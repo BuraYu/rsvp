@@ -1,10 +1,9 @@
 import { Link } from "lucide-react";
 import { useState } from "react";
 
-export default function Navbar() {
+export default function Navbar({ isAuthenticated }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-
+  console.log("navbar-san", isAuthenticated);
   return (
     <nav className="h-[80px] w-full flex justify-between items-center px-[96px] bg-gray-900">
       {/* Logo */}
@@ -80,7 +79,7 @@ export default function Navbar() {
       </div>
 
       {/* Links for Larger Screens */}
-      {isLoggedIn ? (
+      {isAuthenticated ? (
         <ul className="hidden md:flex space-x-6 gap-5">
           <li>
             <a
