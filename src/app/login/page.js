@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-
+import { useContext } from "react";
+import { AuthContext } from "@/lib/AuthContext";
 import BackgroundSVG from "@/assets/background.svg";
 import ArrowSVG from "@/assets/arrow.svg";
 
@@ -13,6 +14,14 @@ export default function Login() {
   const [isVisible, setIsVisible] = useState(false);
 
   const router = useRouter();
+
+  const { isAuthenticated } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/dashboard");
+    }
+  }, [isAuthenticated, router]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
