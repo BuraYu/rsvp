@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { AuthContext } from "@/lib/AuthContext";
 import { format } from "date-fns";
 import Navbar from "@/components/Navbar";
 import { Card, CardContent } from "@/components/ui/card";
@@ -22,6 +24,8 @@ export default function Events() {
   const [onlineEvents, setOnlineEvents] = useState([]);
   const [offlineEvents, setOfflineEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const { isAuthenticated } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -103,7 +107,7 @@ export default function Events() {
 
   return (
     <div className="bg-gray-100">
-      <Navbar />
+      <Navbar isAuthenticated={isAuthenticated} />
       <div className="container py-2 px-5 mx-auto min-h-screen bg-gray-100 w-full">
         <div className="flex flex-col">
           <h1 className="text-5xl font-bold mb-6 py-5">
