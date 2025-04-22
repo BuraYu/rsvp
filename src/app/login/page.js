@@ -32,12 +32,12 @@ export default function Login() {
       });
 
       if (response.ok) {
-        const data = await response.json(); 
+        const data = await response.json();
         setSubmissionStatus("Form submitted successfully!");
-        localStorage.setItem("authToken", data.token); 
+        localStorage.setItem("authToken", data.token);
         router.push("/dashboard");
       } else {
-        const errorData = await response.json(); 
+        const errorData = await response.json();
         setSubmissionStatus(errorData.message || "Failed to submit the form.");
       }
     } catch (error) {

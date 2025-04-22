@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   return (
     <nav className="h-[80px] w-full flex justify-between items-center px-[96px] bg-gray-900">
@@ -66,7 +66,7 @@ export default function Navbar() {
           Find Event
         </Link>
         <Link
-          href=""
+          href="/dashboard"
           className="hover:text-gray-400 text-white text-2xl transition"
         >
           Dashboard
@@ -91,7 +91,10 @@ export default function Navbar() {
             </a>
           </li>
           <li>
-            <a href="" className="hover:text-gray-400 text-white transition">
+            <a
+              href="/dashboard"
+              className="hover:text-gray-400 text-white transition"
+            >
               Dashboard
             </a>
           </li>
