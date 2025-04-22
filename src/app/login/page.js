@@ -23,16 +23,13 @@ export default function Login() {
     }
 
     try {
-      const response = await fetch(
-        "https://jsonplaceholder.typicode.com/posts",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        }
-      );
+      const response = await fetch("https://localhost:3000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
       if (response.ok) {
         setSubmissionStatus("Form submitted successfully!");
@@ -77,11 +74,11 @@ export default function Login() {
         </p>
       )}
       <a
-        class="absolute m-5 flex gap-1 font-bold items-center group w-max rounded-[18px] transition-all duration-500"
+        className="absolute m-5 flex gap-1 font-bold items-center group w-max rounded-[18px] transition-all duration-500"
         href="/"
       >
-        <ArrowSVG class=" rounded-full  group-hover:p-1 group-hover:text-black" />
-        <p class="text-gray-100 relative text-transparent group-hover:text-black translate-x-16 group-hover:translate-x-0 group-hover:block transition-all">
+        <ArrowSVG className=" rounded-full  group-hover:p-1 group-hover:text-black" />
+        <p className="text-gray-100 relative text-transparent group-hover:text-black translate-x-16 group-hover:translate-x-0 group-hover:block transition-all">
           Go back
         </p>
       </a>
