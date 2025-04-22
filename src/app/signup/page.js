@@ -1,8 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+
 import BackgroundSVG from "@/assets/background.svg";
 import ArrowSVG from "@/assets/arrow.svg";
+import { useContext } from "react";
+import { AuthContext } from "@/lib/AuthContext";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -13,6 +17,16 @@ export default function Login() {
   const [passwordError, setPasswordError] = useState("");
   const [rePasswordError, setRePasswordError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  
+  const router = useRouter();
+
+  const { isAuthenticated } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/dashboard");
+    }
+  }, [isAuthenticated, router]);
 
   const validateEmail = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+.[^\s@]+$/;
