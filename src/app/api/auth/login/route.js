@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt";
 import { connectToDatabase } from "@/lib/mongodb";
 
 const userSchema = new mongoose.Schema({
@@ -11,6 +12,7 @@ const User = mongoose.models.User || mongoose.model("User", userSchema);
 export async function POST(req) {
   try {
     const { email, password } = await req.json();
+    console.log("Request data:", { email, password });
 
     await connectToDatabase();
 
@@ -21,15 +23,13 @@ export async function POST(req) {
       });
     }
 
-    // Bscript insertion here.
-
-    if (user.password !== password) {
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
       return new Response(JSON.stringify({ message: "Invalid password" }), {
         status: 401,
       });
     }
 
-    
     return new Response(JSON.stringify({ message: "Login successful" }), {
       status: 200,
     });

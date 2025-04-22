@@ -23,7 +23,7 @@ export default function Login() {
     }
 
     try {
-      const response = await fetch("https://localhost:3000/api/auth/login", {
+      const response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -32,11 +32,13 @@ export default function Login() {
       });
 
       if (response.ok) {
+        const data = await response.json(); 
         setSubmissionStatus("Form submitted successfully!");
-        localStorage.setItem("authToken", data.token);
+        localStorage.setItem("authToken", data.token); 
         router.push("/dashboard");
       } else {
-        setSubmissionStatus("Failed to submit the form.");
+        const errorData = await response.json(); 
+        setSubmissionStatus(errorData.message || "Failed to submit the form.");
       }
     } catch (error) {
       setSubmissionStatus("An error occurred. Please try again.");
