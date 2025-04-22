@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { AuthContext } from "@/lib/AuthContext";
 import "./globals.css";
 
 export default function RootLayout({ children }) {
@@ -37,7 +38,11 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+          {children}
+        </AuthContext.Provider>
+      </body>
     </html>
   );
 }
