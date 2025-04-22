@@ -10,6 +10,9 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [rePasswordError, setRePasswordError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const validateEmail = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+.[^\s@]+$/;
@@ -20,6 +23,74 @@ export default function Login() {
     }
   };
 
+  const validatePassword = () => {
+    if (password.length < 8) {
+      setPasswordError("Password must be at least 8 characters long.");
+    } else if (!/[!@#$%^&*]/.test(password)) {
+      setPasswordError("Password must include at least one special character.");
+    } else {
+      setPasswordError("");
+    }
+  };
+
+  const validateRePassword = () => {
+    if (password !== rePassword) {
+      setRePasswordError("Passwords do not match.");
+    } else {
+      setRePasswordError("");
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setIsLoading(true);
+
+    if (!username || !email || !password || !rePassword) {
+      alert("Please fill in all fields.");
+      setIsLoading(false);
+      return;
+    }
+
+    if (emailError || passwordError || rePasswordError) {
+      alert("Please fix the errors before submitting.");
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:3000/api/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, email, password, rePassword }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Server error:", response.status, errorData);
+        // TODO add different responses to user for the errors.
+        if (errorData.error === "Email is already in use.") {
+          alert(
+            "This email is already registered. Please use a different email."
+          );
+        } else {
+          throw new Error(
+            errorData.error || "Signup failed. Please try again."
+          );
+        }
+        return;
+      }
+
+      const data = await response.json();
+      console.log("Signup successful:", data);
+      alert("Signup successful!");
+    } catch (error) {
+      console.error("Error during signup:", error);
+      alert(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
     <div className="flex h-screen">
       <a
@@ -40,7 +111,7 @@ export default function Login() {
           <span className="">Event app</span>
         </a>
         <h2 className="text-3xl font-bold">Create an account</h2>
-        <form className="w-full">
+        <form className="w-full" onSubmit={handleSubmit}>
           {/* Username */}
           <div className="flex flex-col">
             <label className="text-sm mb-2 text-neutral-500">
@@ -48,7 +119,7 @@ export default function Login() {
             </label>
             <div className="p-2 px-1 border border-neutral-300 focus-within:border-neutral-400 bg-transparent w-full inline-flex rounded-[18px] font-poppins">
               <input
-                type="email"
+                type="name"
                 placeholder="John Doe"
                 className="p-2 w-full bg-transparent focus:outline-none disabled:text-neutral-500"
                 value={username}
@@ -87,6 +158,7 @@ export default function Login() {
                 className="p-2  w-full bg-transparent focus:outline-none disabled:text-neutral-500"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                onBlur={validatePassword}
               />
               <button type="button">
                 <svg
@@ -116,6 +188,7 @@ export default function Login() {
                 className="p-2  w-full bg-transparent focus:outline-none disabled:text-neutral-500"
                 value={rePassword}
                 onChange={(e) => setRePassword(e.target.value)}
+                onBlur={validateRePassword}
               />
               <button type="button">
                 <svg
@@ -135,7 +208,7 @@ export default function Login() {
           </div>
           <button
             type="submit"
-            className="p-4 text-white text-center text-lg rounded-[18px] bg-black w-full disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-500 my-8"
+            className="p-4 text-white text-center cursor-pointer text-lg rounded-[18px] bg-black w-full disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-500 my-8"
           >
             Sign Up
           </button>
