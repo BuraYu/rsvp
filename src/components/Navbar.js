@@ -71,7 +71,7 @@ export default function Navbar({ isAuthenticated }) {
           Dashboard
         </Link>
         <Link
-          href=""
+          href="/"
           className="hover:text-gray-400 text-white text-2xl transition"
         >
           Logout
