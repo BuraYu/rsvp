@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { connectToDatabase } from "@/lib/mongodb";
+import connectToDatabase from '@/lib/mongodb';
 
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true },

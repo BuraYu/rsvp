@@ -97,7 +97,7 @@ export default function Navbar({ isAuthenticated }) {
             </Link>
           </li>
           <li>
-            <Link href="" className="hover:text-gray-400 text-white transition">
+            <Link href="/logout" className="hover:text-gray-400 text-white transition">
               Logout
             </Link>
           </li>
