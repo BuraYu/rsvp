@@ -10,7 +10,12 @@ export default function Dashboard() {
   return isAuthenticated ? (
     <div className="flex bg-gray-100">
       <Sidebar />
-      Dashboard
+      <div className="p-4 w-full">
+        <h2 className="text-2xl font-bold">Dashboard</h2>
+        <div className="h-full w-full flex justify-center ">
+          test
+        </div>
+      </div>
     </div>
   ) : (
     <h2>Please login to access</h2>

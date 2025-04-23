@@ -3,7 +3,6 @@ import { useState } from "react";
 
 export default function Navbar({ isAuthenticated }) {
   const [isOpen, setIsOpen] = useState(false);
-  console.log("navbar-san", isAuthenticated);
   return (
     <nav className="h-[80px] w-full flex justify-between items-center px-[96px] bg-gray-900">
       {/* Logo */}
@@ -82,52 +81,52 @@ export default function Navbar({ isAuthenticated }) {
       {isAuthenticated ? (
         <ul className="hidden md:flex space-x-6 gap-5">
           <li>
-            <a
+            <Link
               href="/events"
               className="hover:text-gray-400  text-white transition"
             >
               Find Event
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               href="/dashboard"
               className="hover:text-gray-400 text-white transition"
             >
               Dashboard
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="" className="hover:text-gray-400 text-white transition">
+            <Link href="" className="hover:text-gray-400 text-white transition">
               Logout
-            </a>
+            </Link>
           </li>
         </ul>
       ) : (
         <ul className="hidden md:flex space-x-6 gap-5">
           <li>
-            <a
+            <Link
               href="/events"
               className="hover:text-gray-400 text-white transition"
             >
               Find Events
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               href="/signup"
               className="hover:text-gray-400  text-white transition"
             >
               Sign Up
-            </a>
+            </Link>
           </li>
           <li>
-            <a
+            <Link
               href="/login"
               className="hover:text-gray-400  text-white transition"
             >
               Login
-            </a>
+            </Link>
           </li>
         </ul>
       )}
