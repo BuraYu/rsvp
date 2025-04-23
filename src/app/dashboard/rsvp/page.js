@@ -1,7 +1,18 @@
+"use client";
+
+import { useContext } from "react";
+import { AuthContext } from "@/lib/AuthContext";
+import Sidebar from "@/components/Sidebar";
+
 export default function Rsvp() {
-  return (
-    <div>
-      <h1>RSVP</h1>
+  const { isAuthenticated } = useContext(AuthContext);
+
+  return isAuthenticated ? (
+    <div className="flex">
+      <Sidebar />
+      rsvp page
     </div>
+  ) : (
+    <h2>Please login to access</h2>
   );
 }

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@radix-ui/react-slot": "^1.2.0",
     "@svgr/webpack": "^8.1.0",
     "bcrypt": "^5.1.1",
