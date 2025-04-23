@@ -49,7 +49,7 @@ const Sidebar = () => {
   if (!pathname) return null;
 
   return (
-    <div className="h-screen w-64 bg-gray-100 text-gray-800 flex flex-col justify-between">
+    <div className="h-screen w-64 bg-gray-100 text-gray-800 flex flex-col justify-between border-r border-neutral-200">
       <div>
         <div className="p-4 text-xl font-bold ">Event App</div>
         <nav className="mt-4">

@@ -8,9 +8,9 @@ export default function CreateEvent() {
   const { isAuthenticated } = useContext(AuthContext);
 
   return isAuthenticated ? (
-    <div className="flex">
+    <div className="flex bg-gray-100">
       <Sidebar />
-      create event
+      create eve
     </div>
   ) : (
     <h2>Please login to access</h2>

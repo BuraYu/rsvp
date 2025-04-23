@@ -8,7 +8,7 @@ export default function Rsvp() {
   const { isAuthenticated } = useContext(AuthContext);
 
   return isAuthenticated ? (
-    <div className="flex">
+    <div className="flex bg-gray-100">
       <Sidebar />
       rsvp page
     </div>
