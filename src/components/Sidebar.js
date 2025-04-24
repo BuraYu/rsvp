@@ -53,7 +53,7 @@ const Sidebar = () => {
           <ul className="p-4">
             {sidebarItems.map((item) => (
               <li key={item.name} className="mb-2">
-                <Link href={item.path}>
+                <Link passHref={item.path}>
                   <div
                     className={`flex items-center px-5 py-2 rounded-lg cursor-pointer ${
                       pathname === item.path

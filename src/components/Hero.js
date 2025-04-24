@@ -9,13 +9,13 @@ export default function Hero() {
       <p className="text-lg mb-6">RSVP and Management App</p>
       <div className="flex justify-center items-center">
         <Link
-          href="/dashboard"
+          passHref="/dashboard"
           className="inline-block bg-amber-300 text-gray-900 font-bold py-2 px-4 rounded-lg hover:bg-gray-200 transition mr-[10px]"
         >
           Go to Dashboard
         </Link>
         <Link
-          href="/events"
+          passHref="/events"
           className="inline-block bg-white text-gray-900 font-bold py-2 px-4 rounded-lg hover:bg-gray-200 transition"
         >
           Explore events

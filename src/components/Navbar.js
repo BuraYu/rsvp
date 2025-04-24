@@ -58,19 +58,19 @@ export default function Navbar({ isAuthenticated }) {
           </svg>
         </button>
         <Link
-          href="/events"
+          passHref="/events"
           className="hover:text-gray-400 text-white text-2xl transition"
         >
           Find Event
         </Link>
         <Link
-          href="/dashboard"
+          passHref="/dashboard"
           className="hover:text-gray-400 text-white text-2xl transition"
         >
           Dashboard
         </Link>
         <Link
-          href="/logout"
+          passHref="/logout"
           className="hover:text-gray-400 text-white text-2xl transition"
         >
           Logout
@@ -82,16 +82,16 @@ export default function Navbar({ isAuthenticated }) {
         <ul className="hidden md:flex space-x-6 gap-5">
           <li>
             <Link
-              href="/events"
+              passHref="/events"
               className="hover:text-gray-400  text-white transition"
-              legacyBehavior
+              
             >
               Find Event
             </Link>
           </li>
           <li>
             <Link
-              href="/dashboard"
+              passHref="/dashboard"
               className="hover:text-gray-400 text-white transition"
             >
               Dashboard
@@ -99,7 +99,7 @@ export default function Navbar({ isAuthenticated }) {
           </li>
           <li>
             <Link
-              href="/logout"
+              passHref="/logout"
               className="hover:text-gray-400 text-white transition"
             >
               Logout
@@ -110,7 +110,7 @@ export default function Navbar({ isAuthenticated }) {
         <ul className="hidden md:flex space-x-6 gap-5">
           <li>
             <Link
-              href="/events"
+              passHref="/events"
               className="hover:text-gray-400 text-white transition"
             >
               Find Events
@@ -118,7 +118,7 @@ export default function Navbar({ isAuthenticated }) {
           </li>
           <li>
             <Link
-              href="/signup"
+              passHref="/signup"
               className="hover:text-gray-400  text-white transition"
             >
               Sign Up
@@ -126,7 +126,7 @@ export default function Navbar({ isAuthenticated }) {
           </li>
           <li>
             <Link
-              href="/login"
+              passHref="/login"
               className="hover:text-gray-400  text-white transition"
             >
               Login
