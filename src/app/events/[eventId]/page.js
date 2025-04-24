@@ -37,22 +37,24 @@ export default async function EventPage({ params }) {
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              class="h-6 w-6"
+              className="h-6 w-6"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M7 16l-4-4m0 0l4-4m-4 4h18"
               ></path>
             </svg>
-            <span class="ml-1 font-bold text-lg">Back</span>
+            <span className="ml-1 font-bold text-lg">Back</span>
           </Link>
 
           <Image
             src="https://picsum.photos/350/250"
             alt={event.name}
             className="w-full h-64 object-cover"
+            width={200}
+            height={200}
           />
 
           <div className="p-6 space-y-4">

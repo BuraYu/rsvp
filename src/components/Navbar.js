@@ -70,7 +70,7 @@ export default function Navbar({ isAuthenticated }) {
           Dashboard
         </Link>
         <Link
-          href="/"
+          href="/logout"
           className="hover:text-gray-400 text-white text-2xl transition"
         >
           Logout
@@ -84,6 +84,7 @@ export default function Navbar({ isAuthenticated }) {
             <Link
               href="/events"
               className="hover:text-gray-400  text-white transition"
+              legacyBehavior
             >
               Find Event
             </Link>

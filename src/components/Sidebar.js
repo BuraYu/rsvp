@@ -9,10 +9,7 @@ import {
   CalendarIcon,
   PlusCircleIcon,
   UsersIcon,
-  ChartBarIcon,
-  ChatBubbleLeftEllipsisIcon,
-  Cog6ToothIcon,
-  ArrowRightOnRectangleIcon,
+
 } from "@heroicons/react/24/outline";
 
 const sidebarItems = [
@@ -78,7 +75,6 @@ const Sidebar = () => {
           className="flex items-center w-full px-4 py-2 text-red-600 hover:bg-red-100 rounded-lg"
           onClick={() => alert("Logging out...")}
         >
-          <ArrowRightOnRectangleIcon className="h-5 w-5 mr-3" />
           Logout
         </button>
       </div>
