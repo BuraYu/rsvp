@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation"; 
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import {
@@ -9,7 +9,6 @@ import {
   CalendarIcon,
   PlusCircleIcon,
   UsersIcon,
-
 } from "@heroicons/react/24/outline";
 
 const sidebarItems = [
@@ -53,7 +52,7 @@ const Sidebar = () => {
           <ul className="p-4">
             {sidebarItems.map((item) => (
               <li key={item.name} className="mb-2">
-                <Link passHref={item.path}>
+                <Link href={item.path}>
                   <div
                     className={`flex items-center px-5 py-2 rounded-lg cursor-pointer ${
                       pathname === item.path

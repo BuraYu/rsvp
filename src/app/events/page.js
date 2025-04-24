@@ -149,7 +149,7 @@ export default function Events() {
                   className="flex flex-shrink-0 md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
                 >
                   <a
-                    passHref={`/events/${event._id}`}
+                    href={`/events/${event._id}`}
                     className="w-full md:w-[85%] no-underline"
                   >
                     <Card className="w-full h-full hover:shadow-lg transition-shadow duration-300">
@@ -211,7 +211,7 @@ export default function Events() {
                   className="flex flex-shrink-0 md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
                 >
                   <a
-                    passHref={`/events/${event._id}`}
+                    href={`/events/${event._id}`}
                     className="w-full md:w-[85%] no-underline"
                   >
                     <Card className="w-full h-full hover:shadow-lg transition-shadow duration-300">
@@ -272,7 +272,7 @@ export default function Events() {
                   className="flex flex-shrink-0 md:basis-1/2 lg:basis-1/3 xl:basis-1/4"
                 >
                   <a
-                    passHref={`/events/${event._id}`}
+                    href={`/events/${event._id}`}
                     className="w-full md:w-[85%] no-underline"
                   >
                     <Card className="w-full h-full hover:shadow-lg transition-shadow duration-300">

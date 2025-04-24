@@ -87,7 +87,7 @@ export default function Login() {
       )}
       <Link
         className="absolute m-5 flex gap-1 font-bold items-center group w-max rounded-[18px] transition-all duration-500"
-        passHref="/"
+        href="/"
       >
         <ArrowSVG className=" rounded-full  group-hover:p-1 group-hover:text-black" />
         <p className="text-gray-100 relative text-transparent group-hover:text-black translate-x-16 group-hover:translate-x-0 group-hover:block transition-all">
@@ -98,7 +98,7 @@ export default function Login() {
         <Link
           title="Home"
           className="font-extrabold gap-2 capitalize inline-flex text-xl items-center text-primary font-poppins"
-          passHref="/"
+          href="/"
         >
           <span className="">Event app</span>
         </Link>
@@ -151,7 +151,7 @@ export default function Login() {
         </form>
         <p>
           Don&apos;t have an account? Sign up{" "}
-          <Link className="underline text-primary" passHref="/signup">
+          <Link className="underline text-primary" href="/signup">
             here
           </Link>
         </p>
@@ -161,7 +161,7 @@ export default function Login() {
         <div className="w-full h-full relative">
           <a
             className="absolute bg-black text-white px-4 py-2 rounded-[18px] top-4 right-4 z-10"
-            passHref="/signup"
+            href="/signup"
           >
             Sign Up
           </a>

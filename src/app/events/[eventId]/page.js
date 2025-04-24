@@ -28,7 +28,7 @@ export default async function EventPage({ params }) {
         {/* Left side: Event Details */}
         <div className="md:w-2/3 relative">
           <Link
-            passHref="/events"
+            href="/events"
             className=" 
         absolute top-4 left-4 inline-flex items-center border border-indigo-300 px-3 py-1.5 rounded-md text-indigo-500 hover:bg-indigo-50"
           >
