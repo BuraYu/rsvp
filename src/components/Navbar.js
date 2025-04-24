@@ -84,7 +84,6 @@ export default function Navbar({ isAuthenticated }) {
             <Link
               passHref="/events"
               className="hover:text-gray-400  text-white transition"
-              
             >
               Find Event
             </Link>
@@ -113,7 +112,7 @@ export default function Navbar({ isAuthenticated }) {
               passHref="/events"
               className="hover:text-gray-400 text-white transition"
             >
-              Find Events
+              <span>Find Events</span>
             </Link>
           </li>
           <li>
@@ -121,7 +120,7 @@ export default function Navbar({ isAuthenticated }) {
               passHref="/signup"
               className="hover:text-gray-400  text-white transition"
             >
-              Sign Up
+              <a>Sign Up</a>
             </Link>
           </li>
           <li>
@@ -129,7 +128,7 @@ export default function Navbar({ isAuthenticated }) {
               passHref="/login"
               className="hover:text-gray-400  text-white transition"
             >
-              Login
+              <a>Login</a>
             </Link>
           </li>
         </ul>
