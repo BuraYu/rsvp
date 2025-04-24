@@ -1,4 +1,5 @@
 import { MongoClient, ObjectId } from "mongodb";
+import Image from "next/image";
 import Link from "next/link";
 
 export default async function EventPage({ params }) {
@@ -48,7 +49,7 @@ export default async function EventPage({ params }) {
             <span class="ml-1 font-bold text-lg">Back</span>
           </Link>
 
-          <img
+          <Image
             src="https://picsum.photos/350/250"
             alt={event.name}
             className="w-full h-64 object-cover"

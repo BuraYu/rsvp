@@ -7,6 +7,7 @@ import BackgroundSVG from "@/assets/background.svg";
 import ArrowSVG from "@/assets/arrow.svg";
 import { useContext } from "react";
 import { AuthContext } from "@/lib/AuthContext";
+import Link from "next/link";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -17,7 +18,7 @@ export default function Login() {
   const [passwordError, setPasswordError] = useState("");
   const [rePasswordError, setRePasswordError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const router = useRouter();
 
   const { isAuthenticated } = useContext(AuthContext);
@@ -107,7 +108,7 @@ export default function Login() {
   };
   return (
     <div className="flex h-screen">
-      <a
+      <Link
         class="absolute m-5 flex gap-1 font-bold items-center group w-max rounded-[18px] transition-all duration-500"
         href="/"
       >
@@ -115,15 +116,15 @@ export default function Login() {
         <p className="text-gray-100 relative text-transparent group-hover:text-black translate-x-16 group-hover:translate-x-0 group-hover:block transition-all">
           Go back
         </p>
-      </a>
+      </Link>
       <div className="flex flex-col w-full md:w-1/2 items-center md:items-start md:h-full justify-center p-8 md:p-16 gap-4">
-        <a
+        <Link
           title="Home"
           className="font-extrabold gap-2 capitalize inline-flex text-xl items-center text-primary font-poppins"
           href="/"
         >
           <span className="">Event app</span>
-        </a>
+        </Link>
         <h2 className="text-3xl font-bold">Create an account</h2>
         <form className="w-full" onSubmit={handleSubmit}>
           {/* Username */}
@@ -229,9 +230,9 @@ export default function Login() {
         </form>
         <p>
           Allready have an account? Login{" "}
-          <a className="underline text-primary" href="/login">
+          <Link className="underline text-primary" href="/login">
             here
-          </a>
+          </Link>
         </p>
       </div>
 

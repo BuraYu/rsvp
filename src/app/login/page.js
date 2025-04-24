@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { AuthContext } from "@/lib/AuthContext";
 import BackgroundSVG from "@/assets/background.svg";
 import ArrowSVG from "@/assets/arrow.svg";
+import Link from "next/link";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -84,7 +85,7 @@ export default function Login() {
           {submissionStatus}
         </p>
       )}
-      <a
+      <Link
         className="absolute m-5 flex gap-1 font-bold items-center group w-max rounded-[18px] transition-all duration-500"
         href="/"
       >
@@ -92,15 +93,15 @@ export default function Login() {
         <p className="text-gray-100 relative text-transparent group-hover:text-black translate-x-16 group-hover:translate-x-0 group-hover:block transition-all">
           Go back
         </p>
-      </a>
+      </Link>
       <div className="flex flex-col w-full md:w-1/2 items-center md:items-start md:h-full justify-center p-8 md:p-16 gap-4">
-        <a
+        <Link
           title="Home"
           className="font-extrabold gap-2 capitalize inline-flex text-xl items-center text-primary font-poppins"
           href="/"
         >
           <span className="">Event app</span>
-        </a>
+        </Link>
         <h2 className="text-3xl font-bold">Log in</h2>
         <form className="w-full" onSubmit={handleSubmit}>
           <div className="flex flex-col">
@@ -149,10 +150,10 @@ export default function Login() {
           </button>
         </form>
         <p>
-          Don't have an account? Sign up{" "}
-          <a className="underline text-primary" href="/signup">
+          Don&apos;t have an account? Sign up{" "}
+          <Link className="underline text-primary" href="/signup">
             here
-          </a>
+          </Link>
         </p>
       </div>
 
