@@ -120,7 +120,7 @@ export default function Navbar({ isAuthenticated }) {
               href="/signup"
               className="hover:text-gray-400  text-white transition"
             >
-              <a>Sign Up</a>
+              Sign Up
             </Link>
           </li>
           <li>
@@ -128,7 +128,7 @@ export default function Navbar({ isAuthenticated }) {
               href="/login"
               className="hover:text-gray-400  text-white transition"
             >
-              <a>Login</a>
+              Login
             </Link>
           </li>
         </ul>
