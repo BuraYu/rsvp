@@ -1,8 +1,14 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { logout } from "@/lib/logout";
 
 export default function Navbar({ isAuthenticated }) {
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <nav className="h-[80px] w-full flex justify-between items-center px-[96px] bg-gray-900">
       {/* Logo */}
@@ -70,8 +76,9 @@ export default function Navbar({ isAuthenticated }) {
           Dashboard
         </Link>
         <Link
-          href="/logout"
+          href="/"
           className="hover:text-gray-400 text-white text-2xl transition"
+          onClick={handleLogout}
         >
           Logout
         </Link>
@@ -98,8 +105,9 @@ export default function Navbar({ isAuthenticated }) {
           </li>
           <li>
             <Link
-              href="/logout"
+              href="/"
               className="hover:text-gray-400 text-white transition"
+              onClick={handleLogout}
             >
               Logout
             </Link>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { logout } from "@/lib/logout";
 
 import {
   HomeIcon,
@@ -35,13 +36,14 @@ const sidebarItems = [
 ];
 
 const Sidebar = () => {
-  const router = useRouter();
   const [pathname, setPathname] = useState(null);
 
   useEffect(() => {
     setPathname(window.location.pathname);
   }, []);
-
+  const handleLogout = () => {
+    logout();
+  };
   if (!pathname) return null;
 
   return (
@@ -72,7 +74,7 @@ const Sidebar = () => {
       <div className="p-4 border-t border-gray-300">
         <button
           className="flex items-center w-full px-4 py-2 text-red-600 hover:bg-red-100 rounded-lg"
-          onClick={() => alert("Logging out...")}
+          onClick={handleLogout}
         >
           Logout
         </button>

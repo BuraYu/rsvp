@@ -7,6 +7,7 @@ import Sidebar from "@/components/Sidebar";
 export default function Dashboard() {
   const { isAuthenticated } = useContext(AuthContext);
 
+
   return isAuthenticated ? (
     <div className="flex bg-gray-100">
       <Sidebar />
