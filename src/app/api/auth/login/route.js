@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import connectToDatabase from '@/lib/mongodb';
+import connectToDatabase from "@/lib/mongodb";
 
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
+  username: { type: String, required: true },
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
@@ -15,7 +16,6 @@ const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret";
 export async function POST(req) {
   try {
     const { email, password } = await req.json();
-    console.log("Request data:", { email, password });
 
     await connectToDatabase();
 
@@ -33,12 +33,21 @@ export async function POST(req) {
       });
     }
 
-    const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, {
-      expiresIn: "1h",
-    });
+    const token = jwt.sign(
+      { id: user._id, email: user.email, username: user.username },
+      JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
+    console.log("token", token);
 
     return new Response(
-      JSON.stringify({ message: "Login successful", token }),
+      JSON.stringify({
+        message: "Login successful",
+        token,
+        username: user.username, 
+      }),
       {
         status: 200,
       }

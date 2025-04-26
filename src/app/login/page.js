@@ -45,7 +45,9 @@ export default function Login() {
         const data = await response.json();
         setSubmissionStatus("Form submitted successfully!");
         localStorage.setItem("authToken", data.token);
+        localStorage.setItem("username", data.username);
         router.push("/dashboard");
+        console.error("username", data.username);
       } else {
         const errorData = await response.json();
         setSubmissionStatus(errorData.message || "Failed to submit the form.");
