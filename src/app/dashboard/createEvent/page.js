@@ -22,7 +22,7 @@ export default function CreateEvent() {
   const [location, setLocation] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
-  const [acceptRSVPs, setAcceptRSVPs] = useState("Yes");
+  const [image, setImage] = useState("");
 
   const categories = [
     "Music",
@@ -40,10 +40,11 @@ export default function CreateEvent() {
     "Other",
   ];
 
-  const handleSubmit = (e) => {
-    console.log("Form submitted!");
+  const handleSubmit = async (e) => {
+    console.log("Hello");
 
     e.preventDefault();
+
     const eventData = {
       title,
       description,
@@ -59,10 +60,34 @@ export default function CreateEvent() {
       location,
       latitude,
       longitude,
-      acceptRSVPs,
+      image,
+      createdBy: "660f0c72fe6a27b72c1b9f5e",
     };
-    console.log(eventData);
+
+    try {
+      const response = await fetch("/api/createEvent", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(eventData),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        alert("Event created successfully!");
+        console.log(result);
+      } else {
+        const errorResult = await response.json();
+        alert("Error creating event: " + errorResult.message);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred while creating the event.");
+    }
+    console.log("eventDat", eventData);
   };
+
 
   return isAuthenticated ? (
     <div className="flex bg-gray-100 h-screen">
@@ -194,22 +219,13 @@ export default function CreateEvent() {
             onChange={setLongitude}
           />
 
-          {/* Upload (just a placeholder) */}
-          <input type="file" className="hidden" />
-          <button className="primary-btn self-start inline-flex items-center gap-2">
-            Upload Feature Image
-            <svg
-              stroke="currentColor"
-              fill="currentColor"
-              viewBox="0 0 24 24"
-              height="1em"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path fill="none" d="M0 0h24v24H0z" />
-              <path d="M5 20h14v-2H5v2zm0-10h4v6h6v-6h4l-7-7-7 7z" />
-            </svg>
-          </button>
+          {/* Image Link */}
+          <InputField
+            label="Image Link"
+            placeholder="Paste an image URL (e.g., https://example.com/image.jpg)"
+            value={image}
+            onChange={setImage}
+          />
 
           {/* Submit */}
           <button

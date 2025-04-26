@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "@/lib/AuthContext";
 import { format } from "date-fns";
 import Navbar from "@/components/Navbar";
@@ -22,7 +21,7 @@ export default function Events() {
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [onlineEvents, setOnlineEvents] = useState([]);
   const [offlineEvents, setOfflineEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
   const { isAuthenticated } = useContext(AuthContext);
 
@@ -31,6 +30,7 @@ export default function Events() {
       try {
         const response = await fetch("/api/events");
         const data = await response.json();
+        console.log("data", data);
         if (Array.isArray(data)) {
           setEvents(data);
           setFilteredEvents(data);
@@ -44,6 +44,7 @@ export default function Events() {
         setEvents([]);
         setFilteredEvents([]);
       }
+      console.log("events", events);
     };
 
     fetchEvents();
@@ -51,8 +52,8 @@ export default function Events() {
 
   useEffect(() => {
     const separateEvents = (events) => {
-      const online = events.filter((event) => event.mode === "online");
-      const offline = events.filter((event) => event.mode === "offline");
+      const online = events.filter((event) => event.medium === "Online");
+      const offline = events.filter((event) => event.medium === "In Person");
 
       setOnlineEvents(online);
       setOfflineEvents(offline);
@@ -66,17 +67,20 @@ export default function Events() {
 
     if (category === "All") {
       setFilteredEvents(events);
-      setOnlineEvents(events.filter((event) => event.mode === "online"));
-      setOfflineEvents(events.filter((event) => event.mode === "offline"));
+      setOnlineEvents(events.filter((event) => event.medium === "Online"));
+      setOfflineEvents(events.filter((event) => event.medium === "In Person"));
     } else {
       const filtered = events.filter((event) => event.category === category);
       setFilteredEvents(filtered);
-      setOnlineEvents(filtered.filter((event) => event.mode === "online"));
-      setOfflineEvents(filtered.filter((event) => event.mode === "offline"));
+      setOnlineEvents(filtered.filter((event) => event.medium === "Online"));
+      setOfflineEvents(
+        filtered.filter((event) => event.medium === "In Person")
+      );
     }
   };
 
   function formatDate(dateString) {
+    if (!dateString) return "";
     return format(new Date(dateString), "dd MMMM yyyy");
   }
 
@@ -112,13 +116,14 @@ export default function Events() {
           <h1 className="text-5xl font-bold mb-6 py-5">
             Explore events near your area
           </h1>
+
           {/* Category Selection */}
           <div className="flex gap-4 mb-8 items-center overflow-auto text-neutral-500">
             {eventTypes.map((category) => (
               <button
                 key={category}
                 onClick={() => handleButtonClick(category)}
-                className={` cursor-pointer text-sm ${
+                className={`cursor-pointer text-sm ${
                   activeButton === category ? "text-red-500" : "text-zinc-400"
                 } rounded hover:text-red-500`}
               >
@@ -126,22 +131,18 @@ export default function Events() {
               </button>
             ))}
           </div>
+
           {/* All events */}
           <h2 className="text-3xl font-bold mb-3">All Events</h2>
           <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
+            opts={{ align: "start", loop: true }}
             className="relative w-full mb-10"
           >
-            {/* Arrows */}
-            <div className="absolute -top-6 right-15 md:right-25 lg:right-19 xl:right-15 2xl:right-18 z-10 flex space-x-2">
+            <div className="absolute -top-6 right-15 z-10 flex space-x-2">
               <CarouselPrevious className="text-pink-500 hover:text-pink-700 hover:scale-110 transition-transform duration-200" />
               <CarouselNext className="text-pink-500 hover:text-pink-700 hover:scale-110 transition-transform duration-200" />
             </div>
 
-            {/* Carousel Items */}
             <CarouselContent className="flex gap-4 px-2">
               {filteredEvents.map((event, index) => (
                 <CarouselItem
@@ -157,19 +158,24 @@ export default function Events() {
                         <div className="flex flex-row md:flex-col space-y-2 w-full">
                           <div className="w-1/2 md:w-full">
                             <Image
-                              src="https://picsum.photos/350/250"
+                              src={
+                                "https://picsum.photos/300/250" ||
+                                "https://picsum.photos/350/250"
+                              }
                               width={350}
                               height={250}
-                              alt="Picture of the author"
+                              alt="Event"
                               className="w-full h-auto"
                             />
                           </div>
                           <div className="w-1/2 md:w-full flex flex-col justify-center gap-1 sm:ml-5 md:ml-0">
                             <span className="text-[0.7rem] text-gray-500 mt-1">
-                              {formatDate(event.dateTime)}
-                            </span>{" "}
+                              {event.startDate
+                                ? formatDate(event.startDate)
+                                : "TBA"}
+                            </span>
                             <h3 className="text-2xl font-bold mb-4">
-                              {event.name}
+                              {event.title}
                             </h3>
                             <span
                               className={`inline-block self-start text-[0.6rem] rounded-md px-2 py-1 ${getCategoryColor(
@@ -188,22 +194,17 @@ export default function Events() {
             </CarouselContent>
           </Carousel>
 
-          {/* Offline events */}
+          {/* Offline Events */}
           <h2 className="text-3xl font-bold mb-3">Offline Events</h2>
           <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
+            opts={{ align: "start", loop: true }}
             className="relative w-full mb-10"
           >
-            {/* Arrows */}
-            <div className="absolute -top-6 right-15 md:right-25 lg:right-19 xl:right-15 2xl:right-18 z-10 flex space-x-2">
+            <div className="absolute -top-6 right-15 z-10 flex space-x-2">
               <CarouselPrevious className="text-pink-500 hover:text-pink-700 hover:scale-110 transition-transform duration-200" />
               <CarouselNext className="text-pink-500 hover:text-pink-700 hover:scale-110 transition-transform duration-200" />
             </div>
 
-            {/* Carousel Items */}
             <CarouselContent className="flex gap-4 px-2">
               {offlineEvents.map((event, index) => (
                 <CarouselItem
@@ -222,16 +223,18 @@ export default function Events() {
                               src="https://picsum.photos/350/250"
                               width={350}
                               height={250}
-                              alt="Picture of the author"
+                              alt="Event"
                               className="w-full h-auto"
                             />
                           </div>
                           <div className="w-1/2 md:w-full flex flex-col justify-center gap-1 sm:ml-5 md:ml-0">
                             <span className="text-[0.7rem] text-gray-500 mt-1">
-                              {formatDate(event.dateTime)}
-                            </span>{" "}
+                              {event.startDate
+                                ? formatDate(event.startDate)
+                                : "TBA"}
+                            </span>
                             <h3 className="text-2xl font-bold mb-4">
-                              {event.name}
+                              {event.title}
                             </h3>
                             <span
                               className={`inline-block self-start text-[0.6rem] rounded-md px-2 py-1 ${getCategoryColor(
@@ -249,22 +252,18 @@ export default function Events() {
               ))}
             </CarouselContent>
           </Carousel>
-          {/* Online events */}
+
+          {/* Online Events */}
           <h2 className="text-3xl font-bold mb-3">Online Events</h2>
           <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
+            opts={{ align: "start", loop: true }}
             className="relative w-full"
           >
-            {/* Arrows */}
-            <div className="absolute -top-6 right-15 md:right-25 lg:right-19 xl:right-15 2xl:right-18 z-10 flex space-x-2">
+            <div className="absolute -top-6 right-15 z-10 flex space-x-2">
               <CarouselPrevious className="text-pink-500 hover:text-pink-700 hover:scale-110 transition-transform duration-200" />
               <CarouselNext className="text-pink-500 hover:text-pink-700 hover:scale-110 transition-transform duration-200" />
             </div>
 
-            {/* Carousel Items */}
             <CarouselContent className="flex gap-4 px-2">
               {onlineEvents.map((event, index) => (
                 <CarouselItem
@@ -283,16 +282,18 @@ export default function Events() {
                               src="https://picsum.photos/350/250"
                               width={350}
                               height={250}
-                              alt="Picture of the author"
+                              alt="Event"
                               className="w-full h-auto"
                             />
                           </div>
                           <div className="w-1/2 md:w-full flex flex-col justify-center gap-1 sm:ml-5 md:ml-0">
                             <span className="text-[0.7rem] text-gray-500 mt-1">
-                              {formatDate(event.dateTime)}
-                            </span>{" "}
+                              {event.startDate
+                                ? formatDate(event.startDate)
+                                : "TBA"}
+                            </span>
                             <h3 className="text-2xl font-bold mb-4">
-                              {event.name}
+                              {event.title}
                             </h3>
                             <span
                               className={`inline-block self-start text-[0.6rem] rounded-md px-2 py-1 ${getCategoryColor(
