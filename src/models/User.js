@@ -6,4 +6,6 @@ const UserSchema = new mongoose.Schema({
   password: { type: String, required: true },
 });
 
+delete mongoose.models.User;
+
 export default mongoose.models.User || mongoose.model("User", UserSchema);

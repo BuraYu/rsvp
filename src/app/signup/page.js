@@ -77,13 +77,12 @@ export default function Login() {
       const response = await fetch("http://localhost:3000/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, email, password, rePassword }),
+        body: JSON.stringify({ username, email, password }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Server error:", response.status, errorData);
-        // TODO add different responses to user for the errors.
         if (errorData.error === "Email is already in use.") {
           alert(
             "This email is already registered. Please use a different email."
