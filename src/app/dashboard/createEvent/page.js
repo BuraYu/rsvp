@@ -194,14 +194,6 @@ export default function CreateEvent() {
             onChange={setLongitude}
           />
 
-          {/* RSVPs */}
-          <ButtonGroup
-            label="Accepting RSVPs"
-            options={["Yes", "No"]}
-            selected={acceptRSVPs}
-            onChange={setAcceptRSVPs}
-          />
-
           {/* Upload (just a placeholder) */}
           <input type="file" className="hidden" />
           <button className="primary-btn self-start inline-flex items-center gap-2">
