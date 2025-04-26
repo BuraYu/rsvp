@@ -21,7 +21,6 @@ export default function Events() {
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [onlineEvents, setOnlineEvents] = useState([]);
   const [offlineEvents, setOfflineEvents] = useState([]);
-  // const [loading, setLoading] = useState(true);
 
   const { isAuthenticated } = useContext(AuthContext);
 
@@ -30,7 +29,6 @@ export default function Events() {
       try {
         const response = await fetch("/api/events");
         const data = await response.json();
-        console.log("data", data);
         if (Array.isArray(data)) {
           setEvents(data);
           setFilteredEvents(data);
@@ -44,7 +42,6 @@ export default function Events() {
         setEvents([]);
         setFilteredEvents([]);
       }
-      console.log("events", events);
     };
 
     fetchEvents();
@@ -153,38 +150,40 @@ export default function Events() {
                     href={`/events/${event._id}`}
                     className="w-full md:w-[85%] no-underline"
                   >
-                    <Card className="w-full h-full hover:shadow-lg transition-shadow duration-300">
-                      <CardContent className="relative flex h-auto p-4">
-                        <div className="flex flex-row md:flex-col space-y-2 w-full">
-                          <div className="w-1/2 md:w-full">
-                            <Image
-                              src={
-                                "https://picsum.photos/300/250" ||
-                                "https://picsum.photos/350/250"
-                              }
-                              width={350}
-                              height={250}
-                              alt="Event"
-                              className="w-full h-auto"
-                            />
-                          </div>
-                          <div className="w-1/2 md:w-full flex flex-col justify-center gap-1 sm:ml-5 md:ml-0">
-                            <span className="text-[0.7rem] text-gray-500 mt-1">
-                              {event.startDate
-                                ? formatDate(event.startDate)
-                                : "TBA"}
-                            </span>
-                            <h3 className="text-2xl font-bold mb-4">
-                              {event.title}
-                            </h3>
-                            <span
-                              className={`inline-block self-start text-[0.6rem] rounded-md px-2 py-1 ${getCategoryColor(
-                                event.category
-                              )}`}
-                            >
-                              {event.category}
-                            </span>
-                          </div>
+                    <Card className="w-full h-full shadow-md hover:shadow-xl transition-shadow duration-300 bg-white rounded-lg overflow-hidden">
+                      <CardContent className="p-4 flex flex-col justify-between h-full">
+                        <div className="w-full h-48 bg-gray-300 rounded-md overflow-hidden mb-4">
+                          <Image
+                            src="https://picsum.photos/350/250"
+                            width={350}
+                            height={250}
+                            alt="Event"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+
+                        <div className="flex flex-col mb-4">
+                          <h3 className="text-2xl font-semibold text-gray-800 mb-2 hover:text-gray-900 transition-all duration-300">
+                            {event.title}
+                          </h3>
+                          <p className="text-sm text-gray-500 tracking-wide">
+                            {event.startDate
+                              ? formatDate(event.startDate)
+                              : "TBA"}
+                          </p>
+                        </div>
+
+                        <div className="flex justify-between items-center mt-auto">
+                          <span
+                            className={`inline-block text-xs font-medium rounded-md px-3 py-1 ${getCategoryColor(
+                              event.category
+                            )}`}
+                          >
+                            {event.category}
+                          </span>
+                          <span className="text-xs text-gray-400 italic">
+                            {event.createdBy}
+                          </span>
                         </div>
                       </CardContent>
                     </Card>
@@ -215,35 +214,40 @@ export default function Events() {
                     href={`/events/${event._id}`}
                     className="w-full md:w-[85%] no-underline"
                   >
-                    <Card className="w-full h-full hover:shadow-lg transition-shadow duration-300">
-                      <CardContent className="relative flex h-auto p-4">
-                        <div className="flex flex-row md:flex-col space-y-2 w-full">
-                          <div className="w-1/2 md:w-full">
-                            <Image
-                              src="https://picsum.photos/350/250"
-                              width={350}
-                              height={250}
-                              alt="Event"
-                              className="w-full h-auto"
-                            />
-                          </div>
-                          <div className="w-1/2 md:w-full flex flex-col justify-center gap-1 sm:ml-5 md:ml-0">
-                            <span className="text-[0.7rem] text-gray-500 mt-1">
-                              {event.startDate
-                                ? formatDate(event.startDate)
-                                : "TBA"}
-                            </span>
-                            <h3 className="text-2xl font-bold mb-4">
-                              {event.title}
-                            </h3>
-                            <span
-                              className={`inline-block self-start text-[0.6rem] rounded-md px-2 py-1 ${getCategoryColor(
-                                event.category
-                              )}`}
-                            >
-                              {event.category}
-                            </span>
-                          </div>
+                    <Card className="w-full h-full shadow-md hover:shadow-xl transition-shadow duration-300 bg-white rounded-lg overflow-hidden">
+                      <CardContent className="p-4 flex flex-col justify-between h-full">
+                        <div className="w-full h-48 bg-gray-300 rounded-md overflow-hidden mb-4">
+                          <Image
+                            src="https://picsum.photos/350/250"
+                            width={350}
+                            height={250}
+                            alt="Event"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+
+                        <div className="flex flex-col mb-4">
+                          <h3 className="text-2xl font-semibold text-gray-800 mb-2 hover:text-gray-900 transition-all duration-300">
+                            {event.title}
+                          </h3>
+                          <p className="text-sm text-gray-500 tracking-wide">
+                            {event.startDate
+                              ? formatDate(event.startDate)
+                              : "TBA"}
+                          </p>
+                        </div>
+
+                        <div className="flex justify-between items-center mt-auto">
+                          <span
+                            className={`inline-block text-xs font-medium rounded-md px-3 py-1 ${getCategoryColor(
+                              event.category
+                            )}`}
+                          >
+                            {event.category}
+                          </span>
+                          <span className="text-xs text-gray-400 italic">
+                            {event.createdBy}
+                          </span>
                         </div>
                       </CardContent>
                     </Card>
@@ -274,35 +278,40 @@ export default function Events() {
                     href={`/events/${event._id}`}
                     className="w-full md:w-[85%] no-underline"
                   >
-                    <Card className="w-full h-full hover:shadow-lg transition-shadow duration-300">
-                      <CardContent className="relative flex h-auto p-4">
-                        <div className="flex flex-row md:flex-col space-y-2 w-full">
-                          <div className="w-1/2 md:w-full">
-                            <Image
-                              src="https://picsum.photos/350/250"
-                              width={350}
-                              height={250}
-                              alt="Event"
-                              className="w-full h-auto"
-                            />
-                          </div>
-                          <div className="w-1/2 md:w-full flex flex-col justify-center gap-1 sm:ml-5 md:ml-0">
-                            <span className="text-[0.7rem] text-gray-500 mt-1">
-                              {event.startDate
-                                ? formatDate(event.startDate)
-                                : "TBA"}
-                            </span>
-                            <h3 className="text-2xl font-bold mb-4">
-                              {event.title}
-                            </h3>
-                            <span
-                              className={`inline-block self-start text-[0.6rem] rounded-md px-2 py-1 ${getCategoryColor(
-                                event.category
-                              )}`}
-                            >
-                              {event.category}
-                            </span>
-                          </div>
+                    <Card className="w-full h-full shadow-md hover:shadow-xl transition-shadow duration-300 bg-white rounded-lg overflow-hidden">
+                      <CardContent className="p-4 flex flex-col justify-between h-full">
+                        <div className="w-full h-48 bg-gray-300 rounded-md overflow-hidden mb-4">
+                          <Image
+                            src="https://picsum.photos/350/250"
+                            width={350}
+                            height={250}
+                            alt="Event"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+
+                        <div className="flex flex-col mb-4">
+                          <h3 className="text-2xl font-semibold text-gray-800 mb-2 hover:text-gray-900 transition-all duration-300">
+                            {event.title}
+                          </h3>
+                          <p className="text-sm text-gray-500 tracking-wide">
+                            {event.startDate
+                              ? formatDate(event.startDate)
+                              : "TBA"}
+                          </p>
+                        </div>
+
+                        <div className="flex justify-between items-center mt-auto">
+                          <span
+                            className={`inline-block text-xs font-medium rounded-md px-3 py-1 ${getCategoryColor(
+                              event.category
+                            )}`}
+                          >
+                            {event.category}
+                          </span>
+                          <span className="text-xs text-gray-400 italic">
+                            {event.createdBy}
+                          </span>
                         </div>
                       </CardContent>
                     </Card>
