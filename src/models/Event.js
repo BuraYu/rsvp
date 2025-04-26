@@ -17,11 +17,7 @@ const EventSchema = new mongoose.Schema(
     latitude: { type: String },
     longitude: { type: String },
     image: { type: String },
-    createdBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
+    createdBy: { type: String },
   },
   { timestamps: true }
 );

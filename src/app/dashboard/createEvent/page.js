@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "@/lib/AuthContext";
 import Sidebar from "@/components/Sidebar";
 import clsx from "clsx";
+import { get } from "mongoose";
 
 export default function CreateEvent() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -61,7 +62,7 @@ export default function CreateEvent() {
       latitude,
       longitude,
       image,
-      createdBy: "660f0c72fe6a27b72c1b9f5e",
+      createdBy: localStorage.getItem("username"),
     };
 
     try {
@@ -87,7 +88,6 @@ export default function CreateEvent() {
     }
     console.log("eventDat", eventData);
   };
-
 
   return isAuthenticated ? (
     <div className="flex bg-gray-100 h-screen">
