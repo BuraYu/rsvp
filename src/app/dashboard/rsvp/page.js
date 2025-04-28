@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { AuthContext } from "@/lib/AuthContext";
+
 import Sidebar from "@/components/Sidebar";
-import clsx from "clsx";
 
 export default function RSVPPage() {
   const [selectedEvent, setSelectedEvent] = useState("");
@@ -10,6 +11,8 @@ export default function RSVPPage() {
   const [linkCreated, setLinkCreated] = useState(false);
   const [shareLink, setShareLink] = useState("");
   const [toastVisible, setToastVisible] = useState();
+
+  const { isAuthenticated } = useContext(AuthContext);
 
   const events = ["Event 1", "Event 2", "Event 3", "Event 4"];
 
@@ -64,7 +67,7 @@ export default function RSVPPage() {
     },
   ];
 
-  return (
+  return isAuthenticated ? (
     <div className="flex bg-gray-100 h-screen">
       <Sidebar />
       <div className="p-4 w-full overflow-y-auto">
@@ -142,6 +145,8 @@ export default function RSVPPage() {
         )}
       </div>
     </div>
+  ) : (
+    <h2>Please login to access</h2>
   );
 }
 
