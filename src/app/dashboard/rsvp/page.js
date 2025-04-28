@@ -150,7 +150,7 @@ export default function RSVPPage() {
             <div className="flex flex-wrap gap-4">
               {shareOptions.map((option) => (
                 <a
-                  key={option.name}
+                  key={option._id}
                   href={option.url}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -185,13 +185,14 @@ function DropdownField({ label, options, value, onChange }) {
         <option value="" disabled>
           Select an event
         </option>
-        {options.map((option) => (
-          <option key={option} value={option}>
-            {option.createdBy === localStorage.getItem("username")
-              ? option.title
-              : null}
-          </option>
-        ))}
+        {options.map((option) =>
+          option.createdBy === localStorage.getItem("username") ? (
+            <option key={option._id} value={option._id}>
+              {console.log(option._id)}
+              {option.title}
+            </option>
+          ) : null
+        )}
       </select>
     </div>
   );
