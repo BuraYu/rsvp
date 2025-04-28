@@ -35,24 +35,49 @@ export default function RSVPPage() {
     fetchEvents();
   }, []);
 
-  const handleCreateLink = () => {
+  const handleCreateLink = async () => {
     if (!selectedEvent) {
       alert("Please select an event.");
       return;
     }
+
+    await saveMessage();
 
     const generatedLink = `https://example.com/rsvp?event=${encodeURIComponent(
       selectedEvent
     )}&message=${encodeURIComponent(message)}`;
     setShareLink(generatedLink);
     setLinkCreated(true);
-    console.log(shareLink);
   };
 
   const handleCopyLink = () => {
     navigator.clipboard.writeText(shareLink);
     setToastVisible(true);
     setTimeout(() => setToastVisible(false), 2000);
+  };
+
+  const saveMessage = async () => {
+    try {
+      const response = await fetch("/api/rsvp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          eventId: selectedEvent,
+          message, 
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        console.log("Message saved successfully:", data);
+      } else {
+        console.error("Error saving message:", data.error);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   const shareOptions = [
@@ -188,7 +213,6 @@ function DropdownField({ label, options, value, onChange }) {
         {options.map((option) =>
           option.createdBy === localStorage.getItem("username") ? (
             <option key={option._id} value={option._id}>
-              {console.log(option._id)}
               {option.title}
             </option>
           ) : null

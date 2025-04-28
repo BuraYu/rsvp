@@ -18,6 +18,10 @@ const EventSchema = new mongoose.Schema(
     longitude: { type: String },
     image: { type: String },
     createdBy: { type: String },
+    message: { type: String },
+    attendees: [{ type: String }],
+    declined: [{ type: String }],
+    maybes: [{ type: String }],
   },
   { timestamps: true }
 );
