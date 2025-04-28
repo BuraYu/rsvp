@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { AuthContext } from "@/lib/AuthContext";
 
 import Sidebar from "@/components/Sidebar";
@@ -11,10 +11,29 @@ export default function RSVPPage() {
   const [linkCreated, setLinkCreated] = useState(false);
   const [shareLink, setShareLink] = useState("");
   const [toastVisible, setToastVisible] = useState();
+  const [events, setEvents] = useState([]);
 
   const { isAuthenticated } = useContext(AuthContext);
 
-  const events = ["Event 1", "Event 2", "Event 3", "Event 4"];
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await fetch("/api/events");
+        const data = await response.json();
+        if (Array.isArray(data)) {
+          setEvents(data);
+        } else {
+          console.error("API did not return an array:", data);
+          setEvents([]);
+        }
+      } catch (error) {
+        console.error("Error fetching events:", error);
+        setEvents([]);
+      }
+    };
+
+    fetchEvents();
+  }, []);
 
   const handleCreateLink = () => {
     if (!selectedEvent) {
@@ -168,7 +187,9 @@ function DropdownField({ label, options, value, onChange }) {
         </option>
         {options.map((option) => (
           <option key={option} value={option}>
-            {option}
+            {option.createdBy === localStorage.getItem("username")
+              ? option.title
+              : null}
           </option>
         ))}
       </select>
