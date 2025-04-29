@@ -2,6 +2,7 @@
 const nextConfig = {
   images: {
     domains: ["picsum.photos"],
+    domains: ["source.unsplash.com"],
   },
   webpack(config) {
     config.module.rules.push({
@@ -19,7 +20,7 @@ const nextConfig = {
           {
             key: "Access-Control-Allow-Origin",
             value: "https://rsvp-rust.vercel.app/",
-          }, 
+          },
           {
             key: "Access-Control-Allow-Methods",
             value: "GET,DELETE,PATCH,POST,PUT",
