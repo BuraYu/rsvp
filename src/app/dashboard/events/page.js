@@ -2,6 +2,7 @@
 
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/lib/AuthContext";
+import Link from "next/link";
 import Sidebar from "@/components/Sidebar";
 
 export default function Events() {
@@ -53,35 +54,39 @@ export default function Events() {
               }}
             >
               {events.map((event, index) => (
-                <div
-                  key={index}
-                  className="cursor-pointer bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-2xl shadow-lg p-5 flex flex-col justify-between min-h-[230px] max-h-[270px] transform transition-transform hover:scale-[1.02] duration-300"
-                >
-                  <div>
-                    <h3 className="font-bold text-xl mb-2 line-clamp-1">
-                      {event.title}
-                    </h3>
-                    <p className="text-sm text-white/90 mb-3 line-clamp-3">
-                      {event.description}
-                    </p>
-                  </div>
-                  <div className="flex justify-between items-end mt-auto text-sm text-white/80">
-                    <div className="space-y-1">
-                      <p className="italic">
-                        {new Date(event.startDate).toLocaleDateString("en-GB")}
+                <Link href={`/dashboard/events/${event._id}`}>
+                  <div
+                    key={index}
+                    className="cursor-pointer bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-2xl shadow-lg p-5 flex flex-col justify-between min-h-[230px] max-h-[270px] transform transition-transform hover:scale-[1.02] duration-300"
+                  >
+                    <div>
+                      <h3 className="font-bold text-xl mb-2 line-clamp-1">
+                        {event.title}
+                      </h3>
+                      <p className="text-sm text-white/90 mb-3 line-clamp-3">
+                        {event.description}
                       </p>
-                      <span className="inline-block px-2 py-1 text-xs bg-white/20 rounded-full">
-                        {event.medium}
-                      </span>
                     </div>
-                    <div
-                      className="bg-white/20 rounded-full w-8 h-8 flex items-center justify-center font-semibold text-sm"
-                      title={event.createdBy}
-                    >
-                      {event.createdBy?.charAt(0).toUpperCase()}
+                    <div className="flex justify-between items-end mt-auto text-sm text-white/80">
+                      <div className="space-y-1">
+                        <p className="italic">
+                          {new Date(event.startDate).toLocaleDateString(
+                            "en-GB"
+                          )}
+                        </p>
+                        <span className="inline-block px-2 py-1 text-xs bg-white/20 rounded-full">
+                          {event.medium}
+                        </span>
+                      </div>
+                      <div
+                        className="bg-white/20 rounded-full w-8 h-8 flex items-center justify-center font-semibold text-sm"
+                        title={event.createdBy}
+                      >
+                        {event.createdBy?.charAt(0).toUpperCase()}
+                      </div>
                     </div>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>

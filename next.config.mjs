@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["picsum.photos"],
-    domains: ["source.unsplash.com"],
+    domains: ["picsum.photos", "source.unsplash.com"],
   },
   webpack(config) {
     config.module.rules.push({
