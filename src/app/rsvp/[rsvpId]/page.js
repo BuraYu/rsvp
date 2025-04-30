@@ -10,6 +10,7 @@ export default function RsvpPage({ params }) {
   const [event, setEvent] = useState("");
 
   const { rsvpId: eventId } = React.use(params);
+
   useEffect(() => {
     async function fetchEvent() {
       try {
@@ -29,15 +30,39 @@ export default function RsvpPage({ params }) {
     fetchEvent();
   }, [eventId]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!name || !attendance) {
+      alert("Please fill out all fields.");
       return;
     }
 
-    alert(`Thank you, ${name}! You are ${attendance} to the event.`);
-    setIsSubmitted(true);
+    try {
+      const response = await fetch("/api/rsvp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          eventId: eventId,
+          userId: name,
+          status: attendance,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Error submitting RSVP:", errorData.error);
+        alert("Failed to submit RSVP. Please try again.");
+        return;
+      }
+
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error("Network error:", error);
+      alert("An error occurred. Please check your connection and try again.");
+    }
   };
 
   const formattedDate = useMemo(() => {
@@ -86,8 +111,12 @@ export default function RsvpPage({ params }) {
                 your friends and family, and let's make unforgettable memories
                 together.
               </p>
-              <p>Date: {formattedDate}</p>
-              <p>Starting Time: {time} </p>
+              <p className="text-gray-600 leading-relaxed">
+                Date: {formattedDate}
+              </p>
+              <p className="text-gray-600 leading-relaxed">
+                Starting Time: {time}{" "}
+              </p>
             </div>
           </div>
         </div>
@@ -222,7 +251,7 @@ export default function RsvpPage({ params }) {
                           ? "bg-opacity-100"
                           : "bg-opacity-80"
                       }`}
-                      onClick={() => setAttendance("Coming")}
+                      onClick={() => setAttendance("attending")}
                     >
                       Coming
                     </div>
@@ -237,7 +266,7 @@ export default function RsvpPage({ params }) {
                           ? "bg-opacity-100"
                           : "bg-opacity-80"
                       }`}
-                      onClick={() => setAttendance("Maybe")}
+                      onClick={() => setAttendance("maybe")}
                     >
                       Maybe
                     </div>
@@ -250,7 +279,7 @@ export default function RsvpPage({ params }) {
                       } transition ${
                         attendance === "No" ? "bg-opacity-100" : "bg-opacity-80"
                       }`}
-                      onClick={() => setAttendance("No")}
+                      onClick={() => setAttendance("declined")}
                     >
                       No
                     </div>
