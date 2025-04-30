@@ -1,97 +1,91 @@
 "use client";
 
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/lib/AuthContext";
 import Sidebar from "@/components/Sidebar";
 
 export default function Events() {
   const { isAuthenticated } = useContext(AuthContext);
-  const number = 12;
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const gridColumns = {
-    1: "grid-cols-1",
-    2: "grid-cols-2",
-    3: "grid-cols-3",
-  };
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const res = await fetch("/api/events");
+        const data = await res.json();
+        const username = localStorage.getItem("username");
 
-  const eventBoxes = [
-    {
-      name: "Event name 1",
-      className: "bg-blue-500 min-h-[200px] max-h-[250px]",
-    },
-    {
-      name: "Event name 2",
-      className: "bg-pink-400 min-h-[200px] max-h-[250px]",
-    },
-    {
-      name: "Event name 3",
-      className: "bg-green-400 min-h-[200px] max-h-[250px]",
-    },
-    {
-      name: "Event name 4",
-      className: "bg-purple-500 min-h-[200px] max-h-[250px]",
-    },
-    {
-      name: "Event name 5",
-      className: "bg-yellow-400 min-h-[200px] max-h-[250px]",
-    },
-    {
-      name: "Event name 6",
-      className: "bg-teal-400 min-h-[200px] max-h-[250px]",
-    },
-    {
-      name: "Event name 7",
-      className: "bg-orange-400 min-h-[200px] max-h-[250px]",
-    },
-    {
-      name: "Event name 9",
-      className: "bg-red-400 min-h-[200px] max-h-[250px]",
-    },
-    {
-      name: "Event name 10",
-      className: "bg-indigo-400 min-h-[200px] max-h-[250px]",
-    },
-    {
-      name: "Event name 11",
-      className: "bg-gray-700 min-h-[200px] max-h-[250px]",
-    },
-    {
-      name: "Event name 12",
-      className: "bg-blue-700 min-h-[200px] max-h-[250px]",
-    },
-  ];
+        const userEvents = data.filter((event) => event.createdBy === username);
+
+        setEvents(userEvents);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+  }, []);
 
   return isAuthenticated ? (
     <div className="flex bg-gray-100 h-screen overflow-hidden">
       <Sidebar />
-      <div className="p-4 w-full overflow-hidden">
-        <h2 className="text-2xl font-bold">Events</h2>
-        <div className="flex justify-center items-center h-[90vh] bg-gray-100 px-4 overflow-hidden">
-          <div
-            className={`grid gap-4 mt-6 ${
-              number <= 3
-                ? `${gridColumns[number]} justify-center`
-                : "w-full max-w-screen-xl grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-            }`}
-            style={{
-              gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
-              overflowY: "auto",
-              maxHeight: "calc(90vh - 20px)",
-              padding: "10px",
-              boxSizing: "border-box",
-            }}
-          >
-            {eventBoxes.slice(0, number).map((event, index) => (
-              <div
-                key={index}
-                className={`${event.className} text-white rounded-2xl p-4 flex items-center justify-center`}
-                style={{ minWidth: "280px" }}
-              >
-                {event.name}
-              </div>
-            ))}
+      <div className="p-6 w-full overflow-hidden">
+        <h2 className="text-3xl font-bold text-gray-800 mb-4">My Events</h2>
+        {loading ? (
+          <p className="text-gray-600">Loading...</p>
+        ) : events.length === 0 ? (
+          <p className="text-gray-500">No events found.</p>
+        ) : (
+          <div className="flex justify-center items-start h-[90vh] bg-gray-100 px-4 overflow-hidden">
+            <div
+              className={`grid gap-6 mt-4 ${
+                events.length <= 3 ? "justify-center" : "w-full max-w-screen-xl"
+              }`}
+              style={{
+                gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+                overflowY: "auto",
+                maxHeight: "calc(90vh - 20px)",
+                padding: "10px",
+                boxSizing: "border-box",
+              }}
+            >
+              {events.map((event, index) => (
+                <div
+                  key={index}
+                  className="cursor-pointer bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-2xl shadow-lg p-5 flex flex-col justify-between min-h-[230px] max-h-[270px] transform transition-transform hover:scale-[1.02] duration-300"
+                >
+                  <div>
+                    <h3 className="font-bold text-xl mb-2 line-clamp-1">
+                      {event.title}
+                    </h3>
+                    <p className="text-sm text-white/90 mb-3 line-clamp-3">
+                      {event.description}
+                    </p>
+                  </div>
+                  <div className="flex justify-between items-end mt-auto text-sm text-white/80">
+                    <div className="space-y-1">
+                      <p className="italic">
+                        {new Date(event.startDate).toLocaleDateString("en-GB")}
+                      </p>
+                      <span className="inline-block px-2 py-1 text-xs bg-white/20 rounded-full">
+                        {event.medium}
+                      </span>
+                    </div>
+                    <div
+                      className="bg-white/20 rounded-full w-8 h-8 flex items-center justify-center font-semibold text-sm"
+                      title={event.createdBy}
+                    >
+                      {event.createdBy?.charAt(0).toUpperCase()}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   ) : (
