@@ -1,20 +1,24 @@
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { logout } from "@/lib/logout";
+import Image from "next/image";
 
 export default function Navbar({ isAuthenticated }) {
   const [isOpen, setIsOpen] = useState(false);
-
   const handleLogout = () => {
     logout();
   };
 
   return (
-    <nav className="h-[80px] w-full flex justify-between items-center px-[96px] bg-gray-900">
+    <nav className="h-[80px] w-full flex justify-between items-center md:px-[96px] px-[20px] bg-gray-900 font-sans">
       {/* Logo */}
       <div className="flex items-center space-x-2 text-xl font-bold gap-2">
-        <span className="text-white">logo</span>
-        <span className="text-white">Text</span>
+        <Image
+          src="/assets/flockr_logo.png"
+          width={75}
+          height={75}
+          alt="logo of flockr"
+        />
       </div>
 
       {/* Hamburger Menu Button */}

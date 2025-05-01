@@ -14,7 +14,7 @@ export default function HomePage() {
       suppressHydrationWarning
     >
       <Navbar isAuthenticated={isAuthenticated} />
-      <Hero />
+      <Hero isAuthenticated={isAuthenticated} />
     </div>
   );
 }

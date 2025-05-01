@@ -1,6 +1,8 @@
 import Link from "next/link";
 
-export default function Hero() {
+export default function Hero({ isAuthenticated }) {
+  console.log("hro", isAuthenticated);
+
   return (
     <div className="relative flex-1 flex flex-col justify-center items-center text-white text-center p-4 gap-5">
       <video
@@ -20,21 +22,31 @@ export default function Hero() {
           className="text-3xl md:text-6xl font-bold mb-4 text-shadow-pink"
           style={{ textShadow: "2px 1px 1px black" }}
         >
-          Create and find Unforgettable Events
+          Flock Togehter. Wherever You Roam.
         </h1>
         <p
           className="md:text-lg text-accent mb-6 drop-shadow-xl"
           style={{ textShadow: "2px 1px 1px black" }}
         >
-          RSVP and Management App
+          Create and find Unforgettable Events
         </p>
         <div className="flex justify-center items-center">
-          <Link
-            href="/dashboard"
-            className="inline-block bg-amber-300 text-gray-700 font-bold md:text-lg text-xs py-3 px-5 rounded-full hover:bg-gray-200 transition mr-[10px]"
-          >
-            Go to Dashboard
-          </Link>
+          {isAuthenticated ? (
+            <Link
+              href="/dashboard"
+              className="inline-block bg-amber-300 text-gray-700 font-bold lg:text-lg text-xs py-3 px-5 rounded-full hover:bg-gray-200 transition mr-[10px]"
+            >
+              Go to Dashboard
+            </Link>
+          ) : (
+            <Link
+              href="/signup"
+              className="inline-block bg-amber-300 text-gray-700 font-bold lg:text-lg text-xs py-3 px-5 rounded-full hover:bg-gray-200 transition mr-[10px]"
+            >
+              Get started here
+            </Link>
+          )}
+
           <Link
             href="/events"
             className="inline-block bg-white text-gray-900 font-bold md:text-lg text-xs py-3 px-5 rounded-full hover:bg-gray-200 transition"
