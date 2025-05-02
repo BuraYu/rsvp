@@ -56,11 +56,8 @@ export default function Events() {
               }}
             >
               {events.map((event, index) => (
-                <Link href={`/dashboard/events/${event._id}`}>
-                  <div
-                    key={event._id}
-                    className="cursor-pointer bg-gradient-to-br from-green-500 to-green-600 text-white rounded-2xl shadow-lg p-5 flex flex-col justify-between min-h-[230px] max-h-[270px] transform transition-transform hover:scale-[1.02] duration-300"
-                  >
+                <Link href={`/dashboard/events/${event._id}`} key={event._id}>
+                  <div className="cursor-pointer bg-gradient-to-br from-green-500 to-green-600 text-white rounded-2xl shadow-lg p-5 flex flex-col justify-between min-h-[230px] max-h-[270px] transform transition-transform hover:scale-[1.02] duration-300">
                     <div>
                       <h3 className="font-bold text-xl mb-2 line-clamp-1">
                         {event.title}
