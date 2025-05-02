@@ -9,11 +9,9 @@ export default function RootLayout({ children }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-
     const token = localStorage.getItem("authToken");
 
     if (token) {
-
       setIsAuthenticated(true);
     } else {
       console.log("No token found. User is not authenticated.");
@@ -27,8 +25,11 @@ export default function RootLayout({ children }) {
   if (isLoading) {
     return (
       <html lang="en">
-        <body>
-          <div>Loading...</div>
+        <body className="flex items-center justify-center min-h-screen bg-white">
+          <div className="flex flex-col items-center space-y-4">
+            <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+            <p className="text-gray-600 text-sm">Loading...</p>
+          </div>
         </body>
       </html>
     );
