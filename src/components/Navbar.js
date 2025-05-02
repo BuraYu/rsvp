@@ -1,13 +1,20 @@
+"use client";
+
 import Link from "next/link";
 import { useState } from "react";
 import { logout } from "@/lib/logout";
 import Image from "next/image";
+import { useAuth } from "@/lib/AuthContext";
 
-export default function Navbar({ isAuthenticated }) {
+export default function Navbar() {
+  const { isAuthenticated, loading } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+
   const handleLogout = () => {
     logout();
   };
+
+  if (loading) return null;
 
   return (
     <nav className="h-[80px] w-full flex justify-between items-center md:px-[96px] px-[20px] bg-gray-900 font-sans z-50 relative">
@@ -21,7 +28,7 @@ export default function Navbar({ isAuthenticated }) {
         />
       </div>
 
-      {/* Hamburger Menu Button */}
+      {/* Mobile menu toggle */}
       <button
         className="text-white md:hidden"
         onClick={() => setIsOpen(!isOpen)}
@@ -31,18 +38,17 @@ export default function Navbar({ isAuthenticated }) {
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
         >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="2"
             d="M4 6h16M4 12h16m-7 6h7"
-          ></path>
+          />
         </svg>
       </button>
 
-      {/* Full-Screen Menu */}
+      {/* Mobile Menu */}
       <div
         className={`fixed inset-0 bg-gray-900 text-white flex flex-col items-center justify-center space-y-6 transition-transform ${
           isOpen ? "translate-x-0" : "translate-x-full"
@@ -57,94 +63,77 @@ export default function Navbar({ isAuthenticated }) {
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
           >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="2"
               d="M6 18L18 6M6 6l12 12"
-            ></path>
+            />
           </svg>
         </button>
-        <Link
-          href="/events"
-          className="hover:text-gray-400 text-white text-2xl transition"
-        >
+        <Link href="/events" className="text-2xl hover:text-gray-400">
           Find Event
         </Link>
-        <Link
-          href="/dashboard"
-          className="hover:text-gray-400 text-white text-2xl transition"
-        >
-          Dashboard
-        </Link>
-        <Link
-          href="/"
-          className="hover:text-gray-400 text-white text-2xl transition"
-          onClick={handleLogout}
-        >
-          Logout
-        </Link>
-      </div>
-
-      {/* Links for Larger Screens */}
-      {isAuthenticated ? (
-        <ul className="hidden md:flex space-x-6 gap-5">
-          <li>
-            <Link
-              href="/events"
-              className="hover:text-gray-400  text-white transition"
-            >
-              Find Event
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/dashboard"
-              className="hover:text-gray-400 text-white transition"
-            >
+        {isAuthenticated ? (
+          <>
+            <Link href="/dashboard" className="text-2xl hover:text-gray-400">
               Dashboard
             </Link>
-          </li>
-          <li>
-            <Link
-              href="/"
-              className="hover:text-gray-400 text-white transition"
+            <button
               onClick={handleLogout}
+              className="text-2xl hover:text-gray-400"
             >
               Logout
-            </Link>
-          </li>
-        </ul>
-      ) : (
-        <ul className="hidden md:flex space-x-6 gap-5">
-          <li>
-            <Link
-              href="/events"
-              className="hover:text-gray-400 text-white transition"
-            >
-              <span>Find Events</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/signup"
-              className="hover:text-gray-400  text-white transition"
-            >
+            </button>
+          </>
+        ) : (
+          <>
+            <Link href="/signup" className="text-2xl hover:text-gray-400">
               Sign Up
             </Link>
-          </li>
-          <li>
-            <Link
-              href="/login"
-              className="hover:text-gray-400  text-white transition"
-            >
+            <Link href="/login" className="text-2xl hover:text-gray-400">
               Login
             </Link>
-          </li>
-        </ul>
-      )}
+          </>
+        )}
+      </div>
+
+      {/* Desktop Nav */}
+      <ul className="hidden md:flex space-x-6 gap-5 text-white">
+        <li>
+          <Link href="/events" className="hover:text-gray-400">
+            Find Event
+          </Link>
+        </li>
+        {isAuthenticated ? (
+          <>
+            <li>
+              <Link href="/dashboard" className="hover:text-gray-400">
+                Dashboard
+              </Link>
+            </li>
+            <li>
+              <button onClick={handleLogout} className="hover:text-gray-400">
+                Logout
+              </button>
+            </li>
+          </>
+        ) : (
+          <>
+            <li>
+              <Link href="/signup" className="hover:text-gray-400">
+                Sign Up
+              </Link>
+            </li>
+            <li>
+              <Link href="/login" className="hover:text-gray-400">
+                Login
+              </Link>
+            </li>
+          </>
+        )}
+      </ul>
     </nav>
   );
 }

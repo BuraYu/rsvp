@@ -1,9 +1,9 @@
 import React from "react";
 
-export default function eventInfo({ event, formattedDate, time }) {
+export default function EventInfo({ event, formattedDate, time }) {
   return (
-    <div className="w-full  gap-3 ">
-      <div className="rounded-lg flex flex-col  gap-2 outline w-full outline-1 outline-neutral-300 p-6">
+    <div className="w-full gap-3 ">
+      <div className="rounded-lg flex flex-col gap-2 outline w-full outline-1 outline-neutral-300 p-6 ">
         <h2 className="font-bold text-xl">{event.title}</h2>
         <iframe
           title="map"
@@ -15,7 +15,7 @@ export default function eventInfo({ event, formattedDate, time }) {
           <svg
             stroke="currentColor"
             fill="currentColor"
-            stroke-width="0"
+            strokeWidth="0"
             viewBox="0 0 512 512"
             height="1em"
             width="1em"
@@ -67,7 +67,7 @@ export default function eventInfo({ event, formattedDate, time }) {
           <svg
             stroke="currentColor"
             fill="currentColor"
-            stroke-width="0"
+            strokeWidth="0"
             viewBox="0 0 512 512"
             height="1em"
             width="1em"
@@ -75,9 +75,9 @@ export default function eventInfo({ event, formattedDate, time }) {
           >
             <path
               fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="32"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="32"
               d="M256 48c-79.5 0-144 61.39-144 137 0 87 96 224.87 131.25 272.49a15.77 15.77 0 0025.5 0C304 409.89 400 272.07 400 185c0-75.61-64.5-137-144-137z"
             ></path>
             <circle
@@ -85,9 +85,9 @@ export default function eventInfo({ event, formattedDate, time }) {
               cy="192"
               r="48"
               fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="32"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="32"
             ></circle>
           </svg>
           {event.location}
