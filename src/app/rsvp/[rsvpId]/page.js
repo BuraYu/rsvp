@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import React from "react";
+import EventInfo from "@/components/EventInfo";
 
 export default function RsvpPage({ params }) {
   const [name, setName] = useState("");
@@ -19,7 +20,6 @@ export default function RsvpPage({ params }) {
 
         if (response.ok) {
           setEvent(data.event);
-          console.log("event", event);
         } else {
           console.error("Error from API:", data.error);
         }
@@ -83,9 +83,9 @@ export default function RsvpPage({ params }) {
   }, [event.startDate]);
   console.log(event);
   return (
-    <div className="h-screen p-10 bg-gray-100 text-blue flex justify-center">
-      <div className="w-[1440px] bg-gray-100 flex">
-        <div className="w-[70%]">
+    <div className="min-h-screen md:p-10 bg-gray-100 text-blue flex justify-center">
+      <div className="w-full max-w-[1440px] h-full bg-gray-100 flex flex-col lg:flex-row">
+        <div className="w-full lg:w-[70%] flex flex-col mb-10 lg:mb-0">
           <div className="w-full p-4 flex flex-col gap-8">
             {/* Image */}
             <div className="w-full h-96 overflow-hidden rounded-lg shadow-md">
@@ -121,98 +121,9 @@ export default function RsvpPage({ params }) {
             </div>
           </div>
         </div>
+        <div className="w-full lg:w-[30%] flex flex-col gap-3 px-6 py-5">
+          <EventInfo event={event} formattedDate={formattedDate} time={time} />
 
-        <div className="w-[30%]  gap-3 p-4">
-          <div className="rounded-lg flex flex-col  gap-2 outline w-full outline-1 outline-neutral-300 p-6">
-            <h2 className="font-bold text-xl">Event X</h2>
-            <iframe
-              title="map"
-              className="w-full h-64 mt-2 outline outline-1 outline-neutral-300 shadow-md rounded-lg"
-              src={`https://maps.google.com/maps?q=${event.latitude},${event.longitude}&hl=en&output=embed`}
-            ></iframe>
-
-            <h2 className="inline-flex items-center gap-2 text-sm text-gray-600">
-              <svg
-                stroke="currentColor"
-                fill="currentColor"
-                stroke-width="0"
-                viewBox="0 0 512 512"
-                height="1em"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="32"
-                  d="M352 48H160a48 48 0 00-48 48v368l144-128 144 128V96a48 48 0 00-48-48z"
-                ></path>
-              </svg>
-              {event.category}
-            </h2>
-
-            <h2 className="inline-flex items-center gap-2 text-sm text-gray-600">
-              <svg
-                stroke="currentColor"
-                fill="currentColor"
-                strokeWidth="0"
-                viewBox="0 0 512 512"
-                height="1em"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  width="416"
-                  height="384"
-                  x="48"
-                  y="80"
-                  fill="none"
-                  strokeLinejoin="round"
-                  strokeWidth="32"
-                  rx="48"
-                ></rect>
-                <path
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="32"
-                  d="M128 48v32m256-32v32m80 80H48"
-                ></path>
-              </svg>
-              {formattedDate}, {time}
-            </h2>
-
-            <h2 className="inline-flex flex-wrap items-center gap-2 text-sm text-gray-600">
-              <svg
-                stroke="currentColor"
-                fill="currentColor"
-                stroke-width="0"
-                viewBox="0 0 512 512"
-                height="1em"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="32"
-                  d="M256 48c-79.5 0-144 61.39-144 137 0 87 96 224.87 131.25 272.49a15.77 15.77 0 0025.5 0C304 409.89 400 272.07 400 185c0-75.61-64.5-137-144-137z"
-                ></path>
-                <circle
-                  cx="256"
-                  cy="192"
-                  r="48"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="32"
-                ></circle>
-              </svg>
-              Milan Mela, Kolkata
-            </h2>
-          </div>
           <div className="rounded-lg flex flex-col gap-4 outline w-full outline-1 outline-neutral-300 p-6 mt-5">
             <h2 className="font-bold text-xl">RSVP</h2>
 
