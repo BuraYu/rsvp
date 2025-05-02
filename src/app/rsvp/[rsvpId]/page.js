@@ -19,6 +19,7 @@ export default function RsvpPage({ params }) {
 
         if (response.ok) {
           setEvent(data.event);
+          console.log("event", event);
         } else {
           console.error("Error from API:", data.error);
         }
@@ -80,7 +81,7 @@ export default function RsvpPage({ params }) {
       hour12: false,
     });
   }, [event.startDate]);
-
+  console.log(event);
   return (
     <div className="h-screen p-10 bg-gray-100 text-blue flex justify-center">
       <div className="w-[1440px] bg-gray-100 flex">
@@ -89,7 +90,7 @@ export default function RsvpPage({ params }) {
             {/* Image */}
             <div className="w-full h-96 overflow-hidden rounded-lg shadow-md">
               <img
-                src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d"
+                src={event.image}
                 alt="Event"
                 className="w-full h-full object-cover"
               />
@@ -127,7 +128,7 @@ export default function RsvpPage({ params }) {
             <iframe
               title="map"
               className="w-full h-64 mt-2 outline outline-1 outline-neutral-300 shadow-md rounded-lg"
-              src="https://maps.google.com/maps?q=22.545100086197824,88.39668279885177&hl=en&output=embed"
+              src={`https://maps.google.com/maps?q=${event.latitude},${event.longitude}&hl=en&output=embed`}
             ></iframe>
 
             <h2 className="inline-flex items-center gap-2 text-sm text-gray-600">
@@ -148,7 +149,7 @@ export default function RsvpPage({ params }) {
                   d="M352 48H160a48 48 0 00-48 48v368l144-128 144 128V96a48 48 0 00-48-48z"
                 ></path>
               </svg>
-              Sports
+              {event.category}
             </h2>
 
             <h2 className="inline-flex items-center gap-2 text-sm text-gray-600">
@@ -179,7 +180,7 @@ export default function RsvpPage({ params }) {
                   d="M128 48v32m256-32v32m80 80H48"
                 ></path>
               </svg>
-              Sun Jun 04 2023, 12:30
+              {formattedDate}, {time}
             </h2>
 
             <h2 className="inline-flex flex-wrap items-center gap-2 text-sm text-gray-600">
