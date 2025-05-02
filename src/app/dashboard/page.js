@@ -7,12 +7,13 @@ import Sidebar from "@/components/Sidebar";
 export default function Dashboard() {
   const { isAuthenticated } = useContext(AuthContext);
 
-
   return isAuthenticated ? (
-    <div className="flex bg-gray-100">
+    <div className="flex bg-gray-100 h-screen">
       <Sidebar />
       <div className="p-4 w-full">
-        <h2 className="text-2xl font-bold">Dashboard</h2>
+        <h2 className="text-3xl font-bold text-gray-800 mb-4 text-center">
+          Dashboard
+        </h2>
         <div className="flex items-center justify-center min-h-screen">
           <div className="grid grid-flow-col gap-4">
             {/* Total Events Added */}

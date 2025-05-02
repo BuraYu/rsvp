@@ -34,7 +34,9 @@ export default function Events() {
     <div className="flex bg-gray-100 h-screen overflow-hidden">
       <Sidebar />
       <div className="p-6 w-full overflow-hidden">
-        <h2 className="text-3xl font-bold text-gray-800 mb-4">My Events</h2>
+        <h2 className="text-3xl font-bold text-gray-800 mb-4 text-center">
+          My Events
+        </h2>
         {loading ? (
           <p className="text-gray-600">Loading...</p>
         ) : events.length === 0 ? (

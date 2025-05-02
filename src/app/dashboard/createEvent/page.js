@@ -93,7 +93,9 @@ export default function CreateEvent() {
     <div className="flex bg-gray-100 h-screen">
       <Sidebar />
       <div className="p-4 w-full overflow-y-auto">
-        <h2 className="text-2xl font-bold">Create Event</h2>
+        <h2 className="text-3xl font-bold text-gray-800 mb-4 text-center">
+          Create Event
+        </h2>
         <form className="flex flex-col gap-6 pt-8 pb-5" onSubmit={handleSubmit}>
           {/* Title */}
           <InputField

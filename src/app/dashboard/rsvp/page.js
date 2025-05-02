@@ -65,7 +65,7 @@ export default function RSVPPage() {
         },
         body: JSON.stringify({
           eventId: selectedEvent,
-          message, 
+          message,
         }),
       });
 
@@ -120,7 +120,9 @@ export default function RSVPPage() {
             Link copied!
           </div>
         )}
-        <h2 className="text-2xl font-bold">RSVP Page</h2>
+        <h2 className="text-3xl font-bold text-gray-800 mb-4 text-center">
+          RSVP Page
+        </h2>
         <form className="flex flex-col gap-6 pt-8 pb-5">
           {/* Dropdown Menu */}
           <DropdownField
