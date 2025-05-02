@@ -111,10 +111,10 @@ export default function RsvpPage({ params }) {
               </h2>
               <p className="text-gray-600 leading-relaxed">
                 Join us for an exciting day filled with sports, fun, and
-                community spirit! Whether you're competing, cheering, or just
-                enjoying the atmosphere, there’s something for everyone. Bring
-                your friends and family, and let's make unforgettable memories
-                together.
+                community spirit! Whether you&apos;re competing, cheering, or
+                just enjoying the atmosphere, there&apos;s something for
+                everyone. Bring your friends and family, and let&apos;s make
+                unforgettable memories together.
               </p>
               <p className="text-gray-600 leading-relaxed">
                 Date: {formattedDate}
@@ -213,7 +213,7 @@ export default function RsvpPage({ params }) {
             ) : (
               <div className="text-green-600 font-semibold">
                 <p>
-                  Thank you, {name}! You have RSVP'd as: {attendance}.
+                  Thank you, {name}! You have RSVP&apos;d as: {attendance}.
                 </p>
               </div>
             )}
