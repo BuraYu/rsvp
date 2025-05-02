@@ -17,6 +17,7 @@ import {
 
 export default function Events() {
   const [activeButton, setActiveButton] = useState("All");
+  const [loaded, setLoaded] = useState(false);
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [onlineEvents, setOnlineEvents] = useState([]);
@@ -151,8 +152,23 @@ export default function Events() {
                     href={`/events/${event._id}`}
                     className="w-full md:w-[85%] no-underline"
                   >
-                    <Card className="w-full h-full bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-shadow duration-300">
-                      <div className="flex flex-col h-full relative">
+                    <Card className="w-full h-full bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-shadow duration-300 relative overflow-hidden">
+                      {/* Skeleton Layer */}
+                      {!loaded && (
+                        <div className="absolute inset-0 z-10 p-4 animate-pulse space-y-4 bg-white">
+                          <div className="w-full h-48 bg-gray-200 rounded-md" />
+                          <div className="h-4 bg-gray-200 rounded w-3/4" />
+                          <div className="h-4 bg-gray-200 rounded w-1/2" />
+                          <div className="h-4 bg-gray-100 rounded w-1/3 mt-4" />
+                        </div>
+                      )}
+
+                      {/* Real Content */}
+                      <div
+                        className={`flex flex-col h-full relative transition-opacity duration-300 ${
+                          loaded ? "opacity-100" : "opacity-0"
+                        }`}
+                      >
                         <div className="relative mb-4">
                           <Image
                             src={event.image}
@@ -160,6 +176,7 @@ export default function Events() {
                             height={250}
                             alt="Event"
                             className="rounded-md object-cover w-full h-48"
+                            onLoad={() => setLoaded(true)}
                           />
 
                           {event.startDate &&
@@ -229,8 +246,21 @@ export default function Events() {
                     href={`/events/${event._id}`}
                     className="w-full md:w-[85%] no-underline"
                   >
-                    <Card className="w-full h-full bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-shadow duration-300">
-                      <div className="flex flex-col h-full relative">
+                    <Card className="w-full h-full bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-shadow duration-300 relative overflow-hidden">
+                      {!loaded && (
+                        <div className="absolute inset-0 z-10 p-4 animate-pulse space-y-4 bg-white">
+                          <div className="w-full h-48 bg-gray-200 rounded-md" />
+                          <div className="h-4 bg-gray-200 rounded w-3/4" />
+                          <div className="h-4 bg-gray-200 rounded w-1/2" />
+                          <div className="h-4 bg-gray-100 rounded w-1/3 mt-4" />
+                        </div>
+                      )}
+
+                      <div
+                        className={`flex flex-col h-full relative transition-opacity duration-300 ${
+                          loaded ? "opacity-100" : "opacity-0"
+                        }`}
+                      >
                         <div className="relative mb-4">
                           <Image
                             src={event.image}
@@ -238,6 +268,7 @@ export default function Events() {
                             height={250}
                             alt="Event"
                             className="rounded-md object-cover w-full h-48"
+                            onLoad={() => setLoaded(true)}
                           />
 
                           {event.startDate &&
@@ -307,8 +338,21 @@ export default function Events() {
                     href={`/events/${event._id}`}
                     className="w-full md:w-[85%] no-underline"
                   >
-                    <Card className="w-full h-full bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-shadow duration-300">
-                      <div className="flex flex-col h-full relative">
+                    <Card className="w-full h-full bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-shadow duration-300 relative overflow-hidden">
+                      {!loaded && (
+                        <div className="absolute inset-0 z-10 p-4 animate-pulse space-y-4 bg-white">
+                          <div className="w-full h-48 bg-gray-200 rounded-md" />
+                          <div className="h-4 bg-gray-200 rounded w-3/4" />
+                          <div className="h-4 bg-gray-200 rounded w-1/2" />
+                          <div className="h-4 bg-gray-100 rounded w-1/3 mt-4" />
+                        </div>
+                      )}
+
+                      <div
+                        className={`flex flex-col h-full relative transition-opacity duration-300 ${
+                          loaded ? "opacity-100" : "opacity-0"
+                        }`}
+                      >
                         <div className="relative mb-4">
                           <Image
                             src={event.image}
@@ -316,6 +360,7 @@ export default function Events() {
                             height={250}
                             alt="Event"
                             className="rounded-md object-cover w-full h-48"
+                            onLoad={() => setLoaded(true)}
                           />
 
                           {event.startDate &&
