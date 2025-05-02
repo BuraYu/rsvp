@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 export default function Hero({ isAuthenticated }) {
-  console.log("hro", isAuthenticated);
 
   return (
     <div className="relative flex-1 flex flex-col justify-center items-center text-white text-center p-4 gap-5">

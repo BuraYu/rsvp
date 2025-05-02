@@ -10,7 +10,7 @@ export default function Navbar({ isAuthenticated }) {
   };
 
   return (
-    <nav className="h-[80px] w-full flex justify-between items-center md:px-[96px] px-[20px] bg-gray-900 font-sans">
+    <nav className="h-[80px] w-full flex justify-between items-center md:px-[96px] px-[20px] bg-gray-900 font-sans z-50 relative">
       {/* Logo */}
       <div className="flex items-center space-x-2 text-xl font-bold gap-2">
         <Image

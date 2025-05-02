@@ -50,7 +50,7 @@ export default function Events() {
   useEffect(() => {
     const separateEvents = (events) => {
       const online = events.filter((event) => event.medium === "Online");
-      const offline = events.filter((event) => event.medium === "In Person");
+      const offline = events.filter((event) => event.medium === "Offline");
 
       setOnlineEvents(online);
       setOfflineEvents(offline);
@@ -65,14 +65,12 @@ export default function Events() {
     if (category === "All") {
       setFilteredEvents(events);
       setOnlineEvents(events.filter((event) => event.medium === "Online"));
-      setOfflineEvents(events.filter((event) => event.medium === "In Person"));
+      setOfflineEvents(events.filter((event) => event.medium === "Offline"));
     } else {
       const filtered = events.filter((event) => event.category === category);
       setFilteredEvents(filtered);
       setOnlineEvents(filtered.filter((event) => event.medium === "Online"));
-      setOfflineEvents(
-        filtered.filter((event) => event.medium === "In Person")
-      );
+      setOfflineEvents(filtered.filter((event) => event.medium === "Offline"));
     }
   };
 
@@ -89,17 +87,20 @@ export default function Events() {
   const eventTypes = grabEventTypes(events);
 
   const categoryColors = {
-    Music: "bg-blue-100 text-blue-500",
-    Games: "bg-green-100 text-green-500",
-    Sports: "bg-yellow-100 text-yellow-500",
-    Film: "bg-red-100 text-red-500",
-    Literature: "bg-purple-100 text-purple-500",
-    Technology: "bg-indigo-100 text-indigo-500",
-    Food: "bg-orange-100 text-orange-500",
-    Education: "bg-teal-100 text-teal-500",
-    Entertainment: "bg-pink-100 text-pink-500",
-    Art: "bg-rose-100 text-rose-500",
-    Wellness: "bg-emerald-100 text-emerald-500",
+    Music: "bg-blue-100 text-blue-600",
+    Games: "bg-green-100 text-green-600",
+    Sports: "bg-yellow-100 text-yellow-600",
+    Arts: "bg-pink-100 text-pink-600",
+    Film: "bg-red-100 text-red-600",
+    Literature: "bg-purple-100 text-purple-600",
+    Technology: "bg-indigo-100 text-indigo-600",
+    Culture: "bg-emerald-100 text-emerald-600",
+    Lifestyle: "bg-teal-100 text-teal-600",
+    Charity: "bg-rose-100 text-rose-600",
+    Fashion: "bg-orange-100 text-orange-600",
+    Kids: "bg-lime-100 text-lime-600",
+    Webinar: "bg-lime-100 text-lime-600",
+    Other: "bg-gray-100 text-gray-600",
   };
 
   const getCategoryColor = (category) =>
@@ -150,42 +151,56 @@ export default function Events() {
                     href={`/events/${event._id}`}
                     className="w-full md:w-[85%] no-underline"
                   >
-                    <Card className="w-full h-full shadow-md hover:shadow-xl transition-shadow duration-300 bg-white rounded-lg overflow-hidden">
-                      <CardContent className="p-4 flex flex-col justify-between h-full">
-                        <div className="w-full h-48 bg-gray-300 rounded-md overflow-hidden mb-4">
+                    <Card className="w-full h-full bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-shadow duration-300">
+                      <div className="flex flex-col h-full relative">
+                        <div className="relative mb-4">
                           <Image
-                            src="https://picsum.photos/350/250"
+                            src={event.image}
                             width={350}
                             height={250}
                             alt="Event"
-                            className="w-full h-full object-cover"
+                            className="rounded-md object-cover w-full h-48"
                           />
+
+                          {event.startDate &&
+                            !isNaN(new Date(event.startDate)) && (
+                              <div className="absolute top-2 right-2 bg-white shadow text-sm rounded text-center font-semibold px-2 py-2 leading-tight">
+                                <h3 className="text-base text-gray-900 font-bold">
+                                  {new Date(event.startDate)
+                                    .getDate()
+                                    .toString()
+                                    .padStart(2, "0")}
+                                </h3>
+                                <p className="text-xs text-gray-600 font-bold">
+                                  {new Date(event.startDate)
+                                    .toLocaleString("default", {
+                                      month: "short",
+                                    })
+                                    .toUpperCase()}
+                                </p>
+                              </div>
+                            )}
                         </div>
 
-                        <div className="flex flex-col mb-4">
-                          <h3 className="text-2xl font-semibold text-gray-800 mb-2 hover:text-gray-900 transition-all duration-300">
+                        <div className="mb-2">
+                          <h3 className="text-lg font-bold text-gray-900">
                             {event.title}
                           </h3>
-                          <p className="text-sm text-gray-500 tracking-wide">
-                            {event.startDate
-                              ? formatDate(event.startDate)
-                              : "TBA"}
-                          </p>
                         </div>
 
-                        <div className="flex justify-between items-center mt-auto">
+                        <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-100 text-sm">
                           <span
-                            className={`inline-block text-xs font-medium rounded-md px-3 py-1 ${getCategoryColor(
+                            className={`px-2 py-0.5 rounded ${getCategoryColor(
                               event.category
                             )}`}
                           >
                             {event.category}
                           </span>
-                          <span className="text-xs text-gray-400 italic">
+                          <span className="text-gray-400 italic">
                             {event.createdBy}
                           </span>
                         </div>
-                      </CardContent>
+                      </div>
                     </Card>
                   </a>
                 </CarouselItem>
@@ -214,42 +229,56 @@ export default function Events() {
                     href={`/events/${event._id}`}
                     className="w-full md:w-[85%] no-underline"
                   >
-                    <Card className="w-full h-full shadow-md hover:shadow-xl transition-shadow duration-300 bg-white rounded-lg overflow-hidden">
-                      <CardContent className="p-4 flex flex-col justify-between h-full">
-                        <div className="w-full h-48 bg-gray-300 rounded-md overflow-hidden mb-4">
+                    <Card className="w-full h-full bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-shadow duration-300">
+                      <div className="flex flex-col h-full relative">
+                        <div className="relative mb-4">
                           <Image
-                            src="https://picsum.photos/350/250"
+                            src={event.image}
                             width={350}
                             height={250}
                             alt="Event"
-                            className="w-full h-full object-cover"
+                            className="rounded-md object-cover w-full h-48"
                           />
+
+                          {event.startDate &&
+                            !isNaN(new Date(event.startDate)) && (
+                              <div className="absolute top-2 right-2 bg-white shadow text-sm rounded text-center font-semibold px-2 py-2 leading-tight">
+                                <h3 className="text-base text-gray-900 font-bold">
+                                  {new Date(event.startDate)
+                                    .getDate()
+                                    .toString()
+                                    .padStart(2, "0")}
+                                </h3>
+                                <p className="text-xs text-gray-600 font-bold">
+                                  {new Date(event.startDate)
+                                    .toLocaleString("default", {
+                                      month: "short",
+                                    })
+                                    .toUpperCase()}
+                                </p>
+                              </div>
+                            )}
                         </div>
 
-                        <div className="flex flex-col mb-4">
-                          <h3 className="text-2xl font-semibold text-gray-800 mb-2 hover:text-gray-900 transition-all duration-300">
+                        <div className="mb-2">
+                          <h3 className="text-lg font-bold text-gray-900">
                             {event.title}
                           </h3>
-                          <p className="text-sm text-gray-500 tracking-wide">
-                            {event.startDate
-                              ? formatDate(event.startDate)
-                              : "TBA"}
-                          </p>
                         </div>
 
-                        <div className="flex justify-between items-center mt-auto">
+                        <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-100 text-sm">
                           <span
-                            className={`inline-block text-xs font-medium rounded-md px-3 py-1 ${getCategoryColor(
+                            className={`px-2 py-0.5 rounded ${getCategoryColor(
                               event.category
                             )}`}
                           >
                             {event.category}
                           </span>
-                          <span className="text-xs text-gray-400 italic">
+                          <span className="text-gray-400 italic">
                             {event.createdBy}
                           </span>
                         </div>
-                      </CardContent>
+                      </div>
                     </Card>
                   </a>
                 </CarouselItem>
@@ -278,42 +307,56 @@ export default function Events() {
                     href={`/events/${event._id}`}
                     className="w-full md:w-[85%] no-underline"
                   >
-                    <Card className="w-full h-full shadow-md hover:shadow-xl transition-shadow duration-300 bg-white rounded-lg overflow-hidden">
-                      <CardContent className="p-4 flex flex-col justify-between h-full">
-                        <div className="w-full h-48 bg-gray-300 rounded-md overflow-hidden mb-4">
+                    <Card className="w-full h-full bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-shadow duration-300">
+                      <div className="flex flex-col h-full relative">
+                        <div className="relative mb-4">
                           <Image
-                            src="https://picsum.photos/350/250"
+                            src={event.image}
                             width={350}
                             height={250}
                             alt="Event"
-                            className="w-full h-full object-cover"
+                            className="rounded-md object-cover w-full h-48"
                           />
+
+                          {event.startDate &&
+                            !isNaN(new Date(event.startDate)) && (
+                              <div className="absolute top-2 right-2 bg-white shadow text-sm rounded text-center font-semibold px-2 py-2 leading-tight">
+                                <h3 className="text-base text-gray-900 font-bold">
+                                  {new Date(event.startDate)
+                                    .getDate()
+                                    .toString()
+                                    .padStart(2, "0")}
+                                </h3>
+                                <p className="text-xs text-gray-600 font-bold">
+                                  {new Date(event.startDate)
+                                    .toLocaleString("default", {
+                                      month: "short",
+                                    })
+                                    .toUpperCase()}
+                                </p>
+                              </div>
+                            )}
                         </div>
 
-                        <div className="flex flex-col mb-4">
-                          <h3 className="text-2xl font-semibold text-gray-800 mb-2 hover:text-gray-900 transition-all duration-300">
+                        <div className="mb-2">
+                          <h3 className="text-lg font-bold text-gray-900">
                             {event.title}
                           </h3>
-                          <p className="text-sm text-gray-500 tracking-wide">
-                            {event.startDate
-                              ? formatDate(event.startDate)
-                              : "TBA"}
-                          </p>
                         </div>
 
-                        <div className="flex justify-between items-center mt-auto">
+                        <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-100 text-sm">
                           <span
-                            className={`inline-block text-xs font-medium rounded-md px-3 py-1 ${getCategoryColor(
+                            className={`px-2 py-0.5 rounded ${getCategoryColor(
                               event.category
                             )}`}
                           >
                             {event.category}
                           </span>
-                          <span className="text-xs text-gray-400 italic">
+                          <span className="text-gray-400 italic">
                             {event.createdBy}
                           </span>
                         </div>
-                      </CardContent>
+                      </div>
                     </Card>
                   </a>
                 </CarouselItem>
