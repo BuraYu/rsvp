@@ -40,7 +40,6 @@ export async function POST(req) {
         expiresIn: "1h",
       }
     );
-    console.log("token", token);
 
     return new Response(
       JSON.stringify({

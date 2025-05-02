@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import React from "react";
 import EventInfo from "@/components/EventInfo";
+import Image from "next/image";
 
 export default function RsvpPage({ params }) {
   const [name, setName] = useState("");
@@ -81,7 +82,6 @@ export default function RsvpPage({ params }) {
       hour12: false,
     });
   }, [event.startDate]);
-  console.log(event);
   return (
     <div className="min-h-screen md:p-10 bg-gray-100 text-blue flex justify-center">
       <div className="w-full max-w-[1440px] h-full bg-gray-100 flex flex-col lg:flex-row">
@@ -89,11 +89,15 @@ export default function RsvpPage({ params }) {
           <div className="w-full p-4 flex flex-col gap-8">
             {/* Image */}
             <div className="w-full h-96 overflow-hidden rounded-lg shadow-md">
-              <img
-                src={event.image}
-                alt="Event"
-                className="w-full h-full object-cover"
-              />
+              {event.image ? (
+                <Image
+                  src={event.image}
+                  alt="Event image"
+                  width={200}
+                  height={200}
+                  className="w-full h-full object-cover"
+                />
+              ) : null}
             </div>
 
             {/* About Section */}

@@ -42,7 +42,6 @@ export default function CreateEvent() {
   ];
 
   const handleSubmit = async (e) => {
-    console.log("Hello");
 
     e.preventDefault();
 

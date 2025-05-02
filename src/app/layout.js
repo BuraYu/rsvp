@@ -9,12 +9,10 @@ export default function RootLayout({ children }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    console.log("Checking for auth token in localStorage...");
 
     const token = localStorage.getItem("authToken");
 
     if (token) {
-      console.log("Token found:", token);
 
       setIsAuthenticated(true);
     } else {

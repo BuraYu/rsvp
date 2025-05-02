@@ -96,7 +96,6 @@ export default function Login() {
       }
 
       const data = await response.json();
-      console.log("Signup successful:", data);
       alert("Signup successful!");
     } catch (error) {
       console.error("Error during signup:", error);
