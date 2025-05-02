@@ -1,162 +1,190 @@
 import { MongoClient, ObjectId } from "mongodb";
+import Image from "next/image";
+import Navbar from "@/components/Navbar";
+import { Calendar, Clock, MapPin, Users, Globe, Mic, Tag } from "lucide-react";
 
 export default async function EventDetail({ params }) {
   const { eventId } = params;
 
   const client = await MongoClient.connect(process.env.MONGODB_URI);
   const db = client.db();
-
   const event = await db
     .collection("events")
     .findOne({ _id: new ObjectId(eventId) });
-
   client.close();
 
+  if (!event) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <h1 className="text-3xl font-semibold text-red-500">Event not found</h1>
+      </div>
+    );
+  }
+
+  const formattedDate = event.startDate
+    ? new Date(event.startDate).toLocaleDateString("en-GB").replace(/\//g, ".")
+    : "";
+
+  const time = event.startDate
+    ? new Date(event.startDate).toLocaleTimeString("en-GB", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      })
+    : "";
+
+  const attendees = event.attendees?.length ?? 0;
+
   return (
-    <div className="bg-gray-50 min-h-screen py-12 px-8">
-      <div className="max-w-screen-xl mx-auto bg-white p-10 rounded-xl shadow-xl">
-        <div className="flex flex-col sm:flex-row items-center justify-between mb-8">
-          <div className="space-y-2 sm:space-y-0 sm:w-3/4">
-            <h1 className="text-4xl font-extrabold text-gray-800">
-              {event.title}
-            </h1>
-            <div className="text-lg text-gray-600">{event.createdBy}</div>
-          </div>
-          <div className="sm:w-1/4 text-sm text-gray-500 flex justify-center sm:justify-end items-center mt-6 sm:mt-0">
-            <p className="inline-flex items-center bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-4 py-2 rounded-full font-medium">
-              {event.privacy}
-            </p>
-          </div>
-        </div>
+    <div className="min-h-screen bg-gray-100">
+      <Navbar />
 
-        <p className="text-xl text-gray-700 mb-6">{event.description}</p>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          <div className="space-y-6">
-            <h3 className="text-2xl font-semibold text-gray-800">
-              Event Details
-            </h3>
-            <div className="text-gray-600 space-y-2">
-              <p>
-                <strong>Medium:</strong> {event.medium}
-              </p>
-              <p>
-                <strong>Category:</strong> {event.category}
-              </p>
-              <p>
-                <strong>Language:</strong> {event.language || "N/A"}
-              </p>
-              <p>
-                <strong>Duration:</strong> {event.duration || "N/A"}
-              </p>
-              <p>
-                <strong>Max Participants:</strong>{" "}
-                {event.maxParticipants || "N/A"}
-              </p>
-              <p>
-                <strong>Location:</strong> {event.location || "Online"}
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0">
-              <div className="text-gray-600">
-                <strong>Start Date:</strong>{" "}
-                {new Date(event.startDate).toLocaleDateString("en-GB")}
-              </div>
-              <div className="text-gray-600">
-                <strong>End Date:</strong>{" "}
-                {event.endDate
-                  ? new Date(event.endDate).toLocaleDateString("en-GB")
-                  : "N/A"}
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-6">
-            <h3 className="text-2xl font-semibold text-gray-800">
-              Event Terms
-            </h3>
-            <p className="text-gray-600">
-              {event.terms || "No terms specified."}
-            </p>
-          </div>
-
-          <div className="space-y-6">
-            <h3 className="text-2xl font-semibold text-gray-800">
-              Event Image
-            </h3>
-            {event.image ? (
-              <img
+      <div className="flex flex-col lg:flex-row gap-0 max-w-[1440px] mx-auto">
+        {/* Left side (main content) */}
+        <div className="flex-1 px-4 py-8">
+          <div className="max-w-3xl mx-auto overflow-hidden rounded-xl bg-white shadow">
+            {/* Hero image */}
+            <div className="relative h-64">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10" />
+              <Image
                 src={event.image}
-                alt="Event Image"
-                className="w-full h-auto rounded-xl shadow-lg transform transition-transform hover:scale-105 duration-300"
+                alt={event.title}
+                width={800}
+                height={400}
+                className="w-full h-full object-cover"
               />
-            ) : (
-              <div className="text-center text-gray-600 italic">
-                No image provided.
+              <div className="absolute bottom-0 left-0 p-6 z-20 w-full">
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 mb-3">
+                  <Tag size={12} className="mr-1" />
+                  {event.category}
+                </span>
+                <h1 className="text-3xl font-bold text-white">{event.title}</h1>
               </div>
-            )}
+            </div>
+
+            {/* Event info */}
+            <div className="p-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                <InfoRow
+                  icon={<Calendar />}
+                  label="Date"
+                  value={formattedDate}
+                />
+                <InfoRow
+                  icon={<Clock />}
+                  label="Time"
+                  value={`${time} (${event.duration})`}
+                />
+                <InfoRow
+                  icon={<MapPin />}
+                  label="Location"
+                  value={event.location}
+                />
+                <div className="flex items-start space-x-3">
+                  <Users className="w-5 h-5 text-blue-600 mt-0.5" />
+                  <div>
+                    <div className="text-xs text-gray-500 mb-1">
+                      Participants
+                    </div>
+                    <div className="font-medium">
+                      {attendees} of {event.maxParticipants} spots filled
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-1.5 mt-2">
+                      <div
+                        className="bg-blue-600 h-1.5 rounded-full"
+                        style={{
+                          width: `${
+                            (attendees / event.maxParticipants) * 100
+                          }%`,
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Tags */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                <TagPill icon={<Globe size={14} />} text={event.language} />
+                <TagPill icon={<Mic size={14} />} text={event.medium} />
+                <TagPill text={`Privacy: ${event.privacy}`} />
+                <TagPill text={`Created by: ${event.createdBy}`} />
+              </div>
+
+              {/* Description */}
+              {event.description && (
+                <Section title="About this event">
+                  <p className="text-gray-700 leading-relaxed">
+                    {event.description}
+                  </p>
+                </Section>
+              )}
+
+              {/* Terms */}
+              <Section title="Terms">
+                <p className="text-gray-700 leading-relaxed">
+                  {event.terms || "No terms specified."}
+                </p>
+              </Section>
+
+              {/* Message */}
+              <Section title="Message">
+                <p className="text-gray-700 leading-relaxed">
+                  {event.message || "No message provided."}
+                </p>
+              </Section>
+
+              {/* Attendees */}
+              <Section title="Attendees">
+                <AttendeeList title="Attending" list={event.attendees} />
+                <AttendeeList title="Declined" list={event.declined} />
+                <AttendeeList title="Maybe" list={event.maybes} />
+              </Section>
+            </div>
           </div>
         </div>
 
-        <div className="mt-12 space-y-6">
-          <h3 className="text-2xl font-semibold text-gray-800 mb-4">
-            Attendees
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div className="space-y-2">
-              <h4 className="text-xl font-semibold text-gray-700">Attendees</h4>
-              <ul className="space-y-1">
-                {event.attendees.length > 0 ? (
-                  event.attendees.map((attendee, index) => (
-                    <li key={index} className="text-gray-600">
-                      {attendee}
-                    </li>
-                  ))
-                ) : (
-                  <li className="text-gray-600">No attendees yet.</li>
-                )}
-              </ul>
-            </div>
-
-            <div className="space-y-2">
-              <h4 className="text-xl font-semibold text-gray-700">Declined</h4>
-              <ul className="space-y-1">
-                {event.declined.length > 0 ? (
-                  event.declined.map((decline, index) => (
-                    <li key={index} className="text-gray-600">
-                      {decline}
-                    </li>
-                  ))
-                ) : (
-                  <li className="text-gray-600">No one has declined.</li>
-                )}
-              </ul>
-            </div>
-
-            <div className="space-y-2">
-              <h4 className="text-xl font-semibold text-gray-700">Maybe</h4>
-              <ul className="space-y-1">
-                {event.maybes.length > 0 ? (
-                  event.maybes.map((maybe, index) => (
-                    <li key={index} className="text-gray-600">
-                      {maybe}
-                    </li>
-                  ))
-                ) : (
-                  <li className="text-gray-600">No maybes yet.</li>
-                )}
-              </ul>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-12">
-          <h3 className="text-2xl font-semibold text-gray-800 mb-4">Message</h3>
-          <p className="text-xl text-gray-600">
-            {event.message || "No message provided."}
-          </p>
-        </div>
       </div>
     </div>
   );
 }
+
+// Reusable components
+const InfoRow = ({ icon, label, value }) => (
+  <div className="flex items-start space-x-3">
+    <div className="text-blue-600 mt-0.5">{icon}</div>
+    <div>
+      <div className="text-xs text-gray-500 mb-1">{label}</div>
+      <div className="font-medium">{value}</div>
+    </div>
+  </div>
+);
+
+const Section = ({ title, children }) => (
+  <div className="mt-8">
+    <h2 className="text-lg font-semibold text-gray-900 mb-3">{title}</h2>
+    {children}
+  </div>
+);
+
+const TagPill = ({ icon, text }) => (
+  <span className="flex items-center px-3 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
+    {icon && <span className="mr-1">{icon}</span>}
+    {text}
+  </span>
+);
+
+const AttendeeList = ({ title, list = [] }) => (
+  <div className="mb-6">
+    <h4 className="text-md font-medium text-gray-800">{title}</h4>
+    {list.length > 0 ? (
+      <ul className="list-disc list-inside text-gray-600">
+        {list.map((name, idx) => (
+          <li key={idx}>{name}</li>
+        ))}
+      </ul>
+    ) : (
+      <p className="text-gray-500 italic">No entries</p>
+    )}
+  </div>
+);
