@@ -17,7 +17,6 @@ import {
 
 export default function Events() {
   const [activeButton, setActiveButton] = useState("All");
-  const [loaded, setLoaded] = useState(false);
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
   const [onlineEvents, setOnlineEvents] = useState([]);
@@ -153,70 +152,52 @@ export default function Events() {
                     className="w-full md:w-[85%] no-underline"
                   >
                     <Card className="w-full h-full bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-shadow duration-300 relative overflow-hidden">
-                      {/* Skeleton Layer */}
-                      {!loaded && (
-                        <div className="absolute inset-0 z-10 p-4 animate-pulse space-y-4 bg-white">
-                          <div className="w-full h-48 bg-gray-200 rounded-md" />
-                          <div className="h-4 bg-gray-200 rounded w-3/4" />
-                          <div className="h-4 bg-gray-200 rounded w-1/2" />
-                          <div className="h-4 bg-gray-100 rounded w-1/3 mt-4" />
-                        </div>
-                      )}
+                      <div className="relative mb-4">
+                        <Image
+                          src={event.image}
+                          width={350}
+                          height={250}
+                          alt="Event"
+                          className="rounded-md object-cover w-full h-48"
+                        />
 
-                      {/* Real Content */}
-                      <div
-                        className={`flex flex-col h-full relative transition-opacity duration-300 ${
-                          loaded ? "opacity-100" : "opacity-0"
-                        }`}
-                      >
-                        <div className="relative mb-4">
-                          <Image
-                            src={event.image}
-                            width={350}
-                            height={250}
-                            alt="Event"
-                            className="rounded-md object-cover w-full h-48"
-                            onLoad={() => setLoaded(true)}
-                          />
+                        {event.startDate &&
+                          !isNaN(new Date(event.startDate)) && (
+                            <div className="absolute top-2 right-2 bg-white shadow text-sm rounded text-center font-semibold px-2 py-2 leading-tight">
+                              <h3 className="text-base text-gray-900 font-bold">
+                                {new Date(event.startDate)
+                                  .getDate()
+                                  .toString()
+                                  .padStart(2, "0")}
+                              </h3>
+                              <p className="text-xs text-gray-600 font-bold">
+                                {new Date(event.startDate)
+                                  .toLocaleString("default", {
+                                    month: "short",
+                                  })
+                                  .toUpperCase()}
+                              </p>
+                            </div>
+                          )}
+                      </div>
 
-                          {event.startDate &&
-                            !isNaN(new Date(event.startDate)) && (
-                              <div className="absolute top-2 right-2 bg-white shadow text-sm rounded text-center font-semibold px-2 py-2 leading-tight">
-                                <h3 className="text-base text-gray-900 font-bold">
-                                  {new Date(event.startDate)
-                                    .getDate()
-                                    .toString()
-                                    .padStart(2, "0")}
-                                </h3>
-                                <p className="text-xs text-gray-600 font-bold">
-                                  {new Date(event.startDate)
-                                    .toLocaleString("default", {
-                                      month: "short",
-                                    })
-                                    .toUpperCase()}
-                                </p>
-                              </div>
-                            )}
-                        </div>
+                      <div className="mb-2">
+                        <h3 className="text-lg font-bold text-gray-900">
+                          {event.title}
+                        </h3>
+                      </div>
 
-                        <div className="mb-2">
-                          <h3 className="text-lg font-bold text-gray-900">
-                            {event.title}
-                          </h3>
-                        </div>
-
-                        <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-100 text-sm">
-                          <span
-                            className={`px-2 py-0.5 rounded ${getCategoryColor(
-                              event.category
-                            )}`}
-                          >
-                            {event.category}
-                          </span>
-                          <span className="text-gray-400 italic">
-                            {event.createdBy}
-                          </span>
-                        </div>
+                      <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-100 text-sm">
+                        <span
+                          className={`px-2 py-0.5 rounded ${getCategoryColor(
+                            event.category
+                          )}`}
+                        >
+                          {event.category}
+                        </span>
+                        <span className="text-gray-400 italic">
+                          {event.createdBy}
+                        </span>
                       </div>
                     </Card>
                   </a>
@@ -247,68 +228,52 @@ export default function Events() {
                     className="w-full md:w-[85%] no-underline"
                   >
                     <Card className="w-full h-full bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-shadow duration-300 relative overflow-hidden">
-                      {!loaded && (
-                        <div className="absolute inset-0 z-10 p-4 animate-pulse space-y-4 bg-white">
-                          <div className="w-full h-48 bg-gray-200 rounded-md" />
-                          <div className="h-4 bg-gray-200 rounded w-3/4" />
-                          <div className="h-4 bg-gray-200 rounded w-1/2" />
-                          <div className="h-4 bg-gray-100 rounded w-1/3 mt-4" />
-                        </div>
-                      )}
+                      <div className="relative mb-4">
+                        <Image
+                          src={event.image}
+                          width={350}
+                          height={250}
+                          alt="Event"
+                          className="rounded-md object-cover w-full h-48"
+                        />
 
-                      <div
-                        className={`flex flex-col h-full relative transition-opacity duration-300 ${
-                          loaded ? "opacity-100" : "opacity-0"
-                        }`}
-                      >
-                        <div className="relative mb-4">
-                          <Image
-                            src={event.image}
-                            width={350}
-                            height={250}
-                            alt="Event"
-                            className="rounded-md object-cover w-full h-48"
-                            onLoad={() => setLoaded(true)}
-                          />
+                        {event.startDate &&
+                          !isNaN(new Date(event.startDate)) && (
+                            <div className="absolute top-2 right-2 bg-white shadow text-sm rounded text-center font-semibold px-2 py-2 leading-tight">
+                              <h3 className="text-base text-gray-900 font-bold">
+                                {new Date(event.startDate)
+                                  .getDate()
+                                  .toString()
+                                  .padStart(2, "0")}
+                              </h3>
+                              <p className="text-xs text-gray-600 font-bold">
+                                {new Date(event.startDate)
+                                  .toLocaleString("default", {
+                                    month: "short",
+                                  })
+                                  .toUpperCase()}
+                              </p>
+                            </div>
+                          )}
+                      </div>
 
-                          {event.startDate &&
-                            !isNaN(new Date(event.startDate)) && (
-                              <div className="absolute top-2 right-2 bg-white shadow text-sm rounded text-center font-semibold px-2 py-2 leading-tight">
-                                <h3 className="text-base text-gray-900 font-bold">
-                                  {new Date(event.startDate)
-                                    .getDate()
-                                    .toString()
-                                    .padStart(2, "0")}
-                                </h3>
-                                <p className="text-xs text-gray-600 font-bold">
-                                  {new Date(event.startDate)
-                                    .toLocaleString("default", {
-                                      month: "short",
-                                    })
-                                    .toUpperCase()}
-                                </p>
-                              </div>
-                            )}
-                        </div>
+                      <div className="mb-2">
+                        <h3 className="text-lg font-bold text-gray-900">
+                          {event.title}
+                        </h3>
+                      </div>
 
-                        <div className="mb-2">
-                          <h3 className="text-lg font-bold text-gray-900">
-                            {event.title}
-                          </h3>
-                        </div>
-
-                        <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-100 text-sm">
-                          <span
-                            className={`px-2 py-0.5 rounded ${getCategoryColor(
-                              event.category
-                            )}`}
-                          >
-                            {event.category}
-                          </span>
-                          <span className="text-gray-400 italic">
-                            {event.createdBy}
-                          </span>
-                        </div>
+                      <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-100 text-sm">
+                        <span
+                          className={`px-2 py-0.5 rounded ${getCategoryColor(
+                            event.category
+                          )}`}
+                        >
+                          {event.category}
+                        </span>
+                        <span className="text-gray-400 italic">
+                          {event.createdBy}
+                        </span>
                       </div>
                     </Card>
                   </a>
@@ -339,68 +304,52 @@ export default function Events() {
                     className="w-full md:w-[85%] no-underline"
                   >
                     <Card className="w-full h-full bg-white border border-gray-200 rounded-xl p-4 hover:shadow-lg transition-shadow duration-300 relative overflow-hidden">
-                      {!loaded && (
-                        <div className="absolute inset-0 z-10 p-4 animate-pulse space-y-4 bg-white">
-                          <div className="w-full h-48 bg-gray-200 rounded-md" />
-                          <div className="h-4 bg-gray-200 rounded w-3/4" />
-                          <div className="h-4 bg-gray-200 rounded w-1/2" />
-                          <div className="h-4 bg-gray-100 rounded w-1/3 mt-4" />
-                        </div>
-                      )}
+                      <div className="relative mb-4">
+                        <Image
+                          src={event.image}
+                          width={350}
+                          height={250}
+                          alt="Event"
+                          className="rounded-md object-cover w-full h-48"
+                        />
 
-                      <div
-                        className={`flex flex-col h-full relative transition-opacity duration-300 ${
-                          loaded ? "opacity-100" : "opacity-0"
-                        }`}
-                      >
-                        <div className="relative mb-4">
-                          <Image
-                            src={event.image}
-                            width={350}
-                            height={250}
-                            alt="Event"
-                            className="rounded-md object-cover w-full h-48"
-                            onLoad={() => setLoaded(true)}
-                          />
+                        {event.startDate &&
+                          !isNaN(new Date(event.startDate)) && (
+                            <div className="absolute top-2 right-2 bg-white shadow text-sm rounded text-center font-semibold px-2 py-2 leading-tight">
+                              <h3 className="text-base text-gray-900 font-bold">
+                                {new Date(event.startDate)
+                                  .getDate()
+                                  .toString()
+                                  .padStart(2, "0")}
+                              </h3>
+                              <p className="text-xs text-gray-600 font-bold">
+                                {new Date(event.startDate)
+                                  .toLocaleString("default", {
+                                    month: "short",
+                                  })
+                                  .toUpperCase()}
+                              </p>
+                            </div>
+                          )}
+                      </div>
 
-                          {event.startDate &&
-                            !isNaN(new Date(event.startDate)) && (
-                              <div className="absolute top-2 right-2 bg-white shadow text-sm rounded text-center font-semibold px-2 py-2 leading-tight">
-                                <h3 className="text-base text-gray-900 font-bold">
-                                  {new Date(event.startDate)
-                                    .getDate()
-                                    .toString()
-                                    .padStart(2, "0")}
-                                </h3>
-                                <p className="text-xs text-gray-600 font-bold">
-                                  {new Date(event.startDate)
-                                    .toLocaleString("default", {
-                                      month: "short",
-                                    })
-                                    .toUpperCase()}
-                                </p>
-                              </div>
-                            )}
-                        </div>
+                      <div className="mb-2">
+                        <h3 className="text-lg font-bold text-gray-900">
+                          {event.title}
+                        </h3>
+                      </div>
 
-                        <div className="mb-2">
-                          <h3 className="text-lg font-bold text-gray-900">
-                            {event.title}
-                          </h3>
-                        </div>
-
-                        <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-100 text-sm">
-                          <span
-                            className={`px-2 py-0.5 rounded ${getCategoryColor(
-                              event.category
-                            )}`}
-                          >
-                            {event.category}
-                          </span>
-                          <span className="text-gray-400 italic">
-                            {event.createdBy}
-                          </span>
-                        </div>
+                      <div className="flex justify-between items-center mt-auto pt-4 border-t border-gray-100 text-sm">
+                        <span
+                          className={`px-2 py-0.5 rounded ${getCategoryColor(
+                            event.category
+                          )}`}
+                        >
+                          {event.category}
+                        </span>
+                        <span className="text-gray-400 italic">
+                          {event.createdBy}
+                        </span>
                       </div>
                     </Card>
                   </a>
