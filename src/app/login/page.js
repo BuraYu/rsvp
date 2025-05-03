@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useContext } from "react";
-import { AuthContext } from "@/lib/AuthContext";
+import { useAuth } from "@/lib/AuthContext";
 import BackgroundSVG from "@/assets/background.svg";
 import ArrowSVG from "@/assets/arrow.svg";
 import Link from "next/link";
@@ -16,7 +15,7 @@ export default function Login() {
 
   const router = useRouter();
 
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, setIsAuthenticated } = useAuth();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -33,21 +32,23 @@ export default function Login() {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+      const response = await fetch(
+        "https://rsvp-rust.vercel.app/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
 
       if (response.ok) {
         const data = await response.json();
         setSubmissionStatus("Form submitted successfully!");
         localStorage.setItem("authToken", data.token);
         localStorage.setItem("username", data.username);
-        router.push("/dashboard");
-        console.error("username", data.username);
+        setIsAuthenticated(true);
       } else {
         const errorData = await response.json();
         setSubmissionStatus(errorData.message || "Failed to submit the form.");
