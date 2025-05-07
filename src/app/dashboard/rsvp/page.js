@@ -144,7 +144,7 @@ export default function RSVPPage() {
           <button
             type="button"
             onClick={handleCreateLink}
-            className="p-4 text-white text-center text-lg rounded-[18px] bg-black w-full disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-500 my-8"
+            className="p-4 text-white text-center text-lg rounded-[18px] bg-blue-600 w-full disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-500 my-8"
           >
             Create Link
           </button>
@@ -159,11 +159,11 @@ export default function RSVPPage() {
                 type="text"
                 value={shareLink}
                 readOnly
-                className="p-2 border border-neutral-300 rounded-[18px] w-full bg-gray-100"
+                className="p-2 border border-neutral-300 rounded-[18px] w-full bg-blue-50"
               />
               <button
                 onClick={handleCopyLink}
-                className="p-2 bg-black text-white rounded-[18px] hover:bg-gray-800 transition-all"
+                className="px-5 py-2 bg-blue-600 text-white rounded-[18px] hover:bg-gray-800 transition-all"
               >
                 Copy
               </button>
@@ -171,6 +171,7 @@ export default function RSVPPage() {
           </div>
         )}
         {/* sharing options */}
+        {/* TODO add icons here. */}
         {linkCreated && (
           <div className="mt-8">
             <h3 className="text-xl font-bold mb-4">Share Your RSVP Link</h3>
@@ -181,7 +182,7 @@ export default function RSVPPage() {
                   href={option.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 rounded-[18px] border bg-white text-black hover:bg-neutral-100 transition-all"
+                  className="px-4 py-2 rounded-[30px] border bg-white text-black hover:bg-neutral-100 transition-all"
                 >
                   {option.name}
                 </a>
@@ -207,7 +208,7 @@ function DropdownField({ label, options, value, onChange }) {
       <select
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="p-2 px-1 border border-neutral-300 bg-transparent w-full rounded-[18px] font-poppins focus:outline-none"
+        className="p-2 px-3 border border-neutral-300 bg-white w-full rounded-[18px] font-poppins focus:outline-none"
       >
         <option value="" disabled>
           Select an event
@@ -229,7 +230,7 @@ function TextareaField({ label, value, onChange, placeholder }) {
   return (
     <div className="flex flex-col">
       <label className="text-sm mb-2 text-neutral-500">{label}</label>
-      <div className="p-2 px-1 border border-neutral-300 bg-transparent w-full rounded-[18px] font-poppins">
+      <div className="p-2 px-1 border border-neutral-300 bg-white w-full rounded-[18px] font-poppins">
         <textarea
           placeholder={placeholder}
           value={value}
