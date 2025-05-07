@@ -42,7 +42,6 @@ export default function CreateEvent() {
   ];
 
   const handleSubmit = async (e) => {
-
     e.preventDefault();
 
     const eventData = {
@@ -231,7 +230,7 @@ export default function CreateEvent() {
           {/* Submit */}
           <button
             type="submit"
-            className="p-4 text-white text-center text-lg rounded-[18px] bg-black w-full disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-500 my-8"
+            className="p-4 text-white text-center text-lg rounded-[18px] bg-blue-600 w-full disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-500 my-8"
           >
             Create Event
           </button>
@@ -258,13 +257,13 @@ function InputField({
         {label}
         {required && <span className="text-red-600">*</span>}
       </label>
-      <div className="p-2 px-1 border border-neutral-300 focus-within:border-neutral-400 bg-transparent w-full inline-flex rounded-[18px] font-poppins">
+      <div className="p-2 px-1 border border-neutral-300 focus-within:border-neutral-400 bg-white w-full inline-flex rounded-[18px] font-poppins">
         <input
           type={type}
           placeholder={placeholder}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="p-2 w-full bg-transparent focus:outline-none disabled:text-neutral-500"
+          className="p-2 w-full bg-white focus:outline-none disabled:text-neutral-500"
         />
       </div>
     </div>
@@ -279,12 +278,12 @@ function TextareaField({ label, required, value, onChange, placeholder }) {
         {label}
         {required && <span className="text-red-600">*</span>}
       </label>
-      <div className="p-2 px-1 border border-neutral-300 focus-within:border-neutral-400 bg-transparent w-full inline-flex rounded-[18px] font-poppins">
+      <div className="p-2 px-1 border border-neutral-300 focus-within:border-neutral-400 bg-white w-full inline-flex rounded-[18px] font-poppins">
         <textarea
           placeholder={placeholder}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="p-2 w-full bg-transparent focus:outline-none"
+          className="p-2 w-full bg-white focus:outline-none"
         />
       </div>
     </div>
@@ -306,9 +305,9 @@ function ButtonGroup({ label, required, options, selected, onChange }) {
             key={option}
             onClick={() => onChange(option)}
             className={clsx(
-              "p-2 rounded-[18px] border transition-all",
+              "px-4 py-2 rounded-[30px] border transition-all",
               selected === option
-                ? "bg-black text-white border-black"
+                ? "bg-blue-600 text-white border-black"
                 : "bg-white text-black border-neutral-300 hover:bg-neutral-100"
             )}
           >
