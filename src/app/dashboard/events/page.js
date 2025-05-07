@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/lib/AuthContext";
 import Link from "next/link";
 import Sidebar from "@/components/Sidebar";
+import { Mic } from "lucide-react";
 
 export default function Events() {
   const { isAuthenticated } = useContext(AuthContext);
@@ -57,28 +58,31 @@ export default function Events() {
             >
               {events.map((event, index) => (
                 <Link href={`/dashboard/events/${event._id}`} key={event._id}>
-                  <div className="cursor-pointer bg-gradient-to-br from-green-500 to-green-600 text-white rounded-2xl shadow-lg p-5 flex flex-col justify-between min-h-[230px] max-h-[270px] transform transition-transform hover:scale-[1.02] duration-300">
+                  <div className="cursor-pointer bg-white text-black rounded-2xl shadow-sm p-5 flex flex-col justify-between min-h-[230px] max-h-[270px] transform transition-transform hover:scale-[1.02] duration-300">
                     <div>
                       <h3 className="font-bold text-xl mb-2 line-clamp-1">
                         {event.title}
                       </h3>
-                      <p className="text-sm text-white/90 mb-3 line-clamp-3">
+                      <p className="text-sm text-gray-500 mb-3 line-clamp-3">
                         {event.description}
                       </p>
                     </div>
-                    <div className="flex justify-between items-end mt-auto text-sm text-white/80">
+                    <div className="flex justify-between items-end mt-auto text-sm text-gray-500">
                       <div className="space-y-1">
                         <p className="italic">
                           {new Date(event.startDate).toLocaleDateString(
                             "en-GB"
                           )}
                         </p>
-                        <span className="inline-block px-2 py-1 text-xs bg-white/20 rounded-full">
-                          {event.medium}
+                        <span className="inline-block">
+                          <TagPill
+                            icon={<Mic size={14} />}
+                            text={event.medium}
+                          />
                         </span>
                       </div>
                       <div
-                        className="bg-white/20 rounded-full w-8 h-8 flex items-center justify-center font-semibold text-sm"
+                        className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center font-semibold text-sm"
                         title={event.createdBy}
                       >
                         {event.createdBy?.charAt(0).toUpperCase()}
@@ -96,3 +100,10 @@ export default function Events() {
     <h2>Please login to access</h2>
   );
 }
+
+const TagPill = ({ icon, text }) => (
+  <span className="flex items-center px-3 py-1 rounded-md bg-gray-100 text-gray-700 text-sm">
+    {icon && <span className="mr-1">{icon}</span>}
+    {text}
+  </span>
+);
