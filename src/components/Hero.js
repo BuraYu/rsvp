@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 export default function Hero({ isAuthenticated }) {
-
   return (
     <div className="relative flex-1 flex flex-col justify-center items-center text-white text-center p-4 gap-5">
       <video
@@ -21,7 +20,7 @@ export default function Hero({ isAuthenticated }) {
           className="text-3xl md:text-6xl font-bold mb-4 text-shadow-pink"
           style={{ textShadow: "2px 1px 1px black" }}
         >
-          Flock Togehter. Wherever You Roam.
+          Flock Together. Wherever You Roam.
         </h1>
         <p
           className="md:text-lg text-accent mb-6 drop-shadow-xl"
