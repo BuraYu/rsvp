@@ -4,12 +4,13 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/lib/AuthContext";
 import Link from "next/link";
 import Sidebar from "@/components/Sidebar";
-import { Mic } from "lucide-react";
+import { Mic, Search } from "lucide-react";
 
 export default function Events() {
   const { isAuthenticated } = useContext(AuthContext);
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -31,6 +32,10 @@ export default function Events() {
     fetchEvents();
   }, []);
 
+  const filteredEvents = events.filter((event) =>
+    event.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return isAuthenticated ? (
     <div className="flex bg-gray-100 h-screen overflow-hidden">
       <Sidebar />
@@ -38,15 +43,36 @@ export default function Events() {
         <h2 className="text-3xl font-bold text-gray-800 mb-4 text-center">
           My Events
         </h2>
+
+        {/* Search Bar */}
+        <div className="relative mb-4 flex justify-center">
+          <div className="relative w-[30%]">
+            <input
+              type="text"
+              placeholder="Search events..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="py-2 pl-10 pr-4 border border-neutral-300 focus-within:border-neutral-400 bg-white w-full inline-flex rounded-[18px] font-poppins"
+            />
+            <Search
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400"
+              size={20}
+              strokeWidth={1.5}
+            />
+          </div>
+        </div>
+
         {loading ? (
           <p className="text-gray-600">Loading...</p>
-        ) : events.length === 0 ? (
+        ) : filteredEvents.length === 0 ? (
           <p className="text-gray-500">No events found.</p>
         ) : (
           <div className="flex justify-center items-start h-[90vh] bg-gray-100 px-4 overflow-hidden">
             <div
               className={`grid gap-6 mt-4 ${
-                events.length <= 3 ? "justify-center" : "w-full max-w-screen-xl"
+                filteredEvents.length <= 3
+                  ? "justify-center"
+                  : "w-full max-w-screen-xl"
               }`}
               style={{
                 gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
@@ -56,7 +82,7 @@ export default function Events() {
                 boxSizing: "border-box",
               }}
             >
-              {events.map((event, index) => (
+              {filteredEvents.map((event, index) => (
                 <Link href={`/dashboard/events/${event._id}`} key={event._id}>
                   <div className="cursor-pointer bg-white text-black rounded-2xl shadow-sm p-5 flex flex-col justify-between min-h-[230px] max-h-[270px] transform transition-transform hover:scale-[1.02] duration-300">
                     <div>
