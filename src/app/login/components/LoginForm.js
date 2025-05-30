@@ -58,6 +58,37 @@ export default function LoginForm() {
     }
   };
 
+  const handleGuestLogin = async () => {
+    try {
+      const response = await fetch(
+        "https://rsvp-rust.vercel.app/api/auth/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: "bu@bu.de",
+            password: "123123123!",
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem("authToken", data.token);
+        localStorage.setItem("username", data.username);
+        setIsAuthenticated(true);
+        setSubmissionStatus("Logged in as guest.");
+      } else {
+        const errorData = await response.json();
+        setSubmissionStatus(errorData.message || "Guest login failed.");
+      }
+    } catch (error) {
+      setSubmissionStatus("An error occurred during guest login.");
+    }
+  };
+
   useEffect(() => {
     if (submissionStatus) {
       setIsVisible(true);
@@ -136,6 +167,13 @@ export default function LoginForm() {
             className="p-4 text-white text-center text-lg rounded-[18px] bg-black w-full disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-500 my-8"
           >
             Log in
+          </button>
+          <button
+            type="button"
+            onClick={handleGuestLogin}
+            className="p-4 text-black border border-black text-center text-lg rounded-[18px] bg-white w-full disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-500"
+          >
+            Continue as Guest
           </button>
         </form>
         <p>
