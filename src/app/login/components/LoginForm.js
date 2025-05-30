@@ -12,6 +12,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const [submissionStatus, setSubmissionStatus] = useState("");
   const [isVisible, setIsVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
@@ -31,42 +32,42 @@ export default function LoginForm() {
       return;
     }
 
+    setIsLoading(true);
     try {
       const response = await fetch(
         "https://rsvp-rust.vercel.app/api/auth/login",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password }),
         }
       );
 
       if (response.ok) {
         const data = await response.json();
-        setSubmissionStatus("Form submitted successfully!");
         localStorage.setItem("authToken", data.token);
         localStorage.setItem("username", data.username);
         setIsAuthenticated(true);
+        setSubmissionStatus("Form submitted successfully!");
       } else {
         const errorData = await response.json();
         setSubmissionStatus(errorData.message || "Failed to submit the form.");
       }
-    } catch (error) {
+    } catch {
       setSubmissionStatus("An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleGuestLogin = async () => {
+    setIsLoading(true);
     try {
       const response = await fetch(
         "https://rsvp-rust.vercel.app/api/auth/login",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             email: "bu@bu.de",
             password: "123123123!",
@@ -84,8 +85,10 @@ export default function LoginForm() {
         const errorData = await response.json();
         setSubmissionStatus(errorData.message || "Guest login failed.");
       }
-    } catch (error) {
+    } catch {
       setSubmissionStatus("An error occurred during guest login.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -164,16 +167,27 @@ export default function LoginForm() {
           </div>
           <button
             type="submit"
-            className="p-4 text-white text-center text-lg rounded-[18px] bg-black w-full disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-500 my-8"
+            disabled={isLoading}
+            className="p-4 text-white text-center text-lg rounded-[18px] bg-black w-full disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-500 my-4 hover:bg-neutral-800"
           >
-            Log in
+            {isLoading ? (
+              <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto" />
+            ) : (
+              "Log in"
+            )}
           </button>
+
           <button
             type="button"
+            disabled={isLoading}
             onClick={handleGuestLogin}
-            className="p-4 text-black border border-black text-center text-lg rounded-[18px] bg-white w-full disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-500"
+            className="p-4 text-black text-center text-lg rounded-[18px] bg-white border border-black w-full disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-500 hover:bg-neutral-100"
           >
-            Continue as Guest
+            {isLoading ? (
+              <div className="w-6 h-6 border-2 border-black border-t-transparent rounded-full animate-spin mx-auto" />
+            ) : (
+              "Continue as Guest"
+            )}
           </button>
         </form>
         <p>
